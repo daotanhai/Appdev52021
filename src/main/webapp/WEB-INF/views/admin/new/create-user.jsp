@@ -22,13 +22,13 @@
                     </c:if>
                     <form:form class="form-horizontal" role="form" id="formSubmit" modelAttribute="models">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">UserName:</label>
+                            <label class="col-sm-3 control-label no-padding-right" for="userName">UserName:</label>
                             <div class="col-sm-9">
                                 <form:input path="userName" cssClass="col-xs-10 col-sm-5"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Password:</label>
+                            <label class="col-sm-3 control-label no-padding-right" for="password">Password:</label>
                             <div class="col-sm-9">
                                 <form:input path="password" cssClass="col-xs-10 col-sm-5"/>
                             </div>
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Status 0 or
+                            <label class="col-sm-3 control-label no-padding-right" for="status">Status 0 or
                                 1:</label>
                             <div class="col-sm-9">
                                 <form:input path="status" cssClass="col-xs-10 col-sm-5"/>

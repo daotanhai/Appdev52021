@@ -19,19 +19,9 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li>
-                    <a href="<c:url value='/quan-tri/bai-viet/danh-sach?page=1&limit=2'/>">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Danh sách bài viết
-                    </a>
-
                     <a href="<c:url value='/quan-tri/user/list?page=1&limit=2'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Danh sách users
-                    </a>
-
-                    <a href="<c:url value='/quan-tri/bai-viet/chinh-sua'/>">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Thêm mới bài viết
                     </a>
                     <a href="<c:url value='/quan-tri/user/edit'/>">
                         <i class="menu-icon fa fa-caret-right"></i>

@@ -18,14 +18,11 @@ public class RoleService implements IRoleService {
     @Override
     public Map<String, String> findAll() {
         Map<String, String> result = new HashMap<String, String>();
-        List<RoleEntity> entities = roleRepository.findAll();
-        for (RoleEntity item : entities) {
-            // vì mình k muốn tạo account cho role ADMIN, k hiển thị ra ngoài views có role
-            // ADMIN nên cần né item có role ADMIN ra
-            if (item.getCode().equalsIgnoreCase("ADMIN") == false) {
-                result.put(item.getCode(), item.getName());
-            }
-        }
+        // Chỉ hiển thị ra cho ADMIN tạo 2 role là TRAINER vs TRAINING-STAFF
+        RoleEntity roleEntity = roleRepository.findRoleEntitiesByCode("TRAINER");
+        RoleEntity roleEntityTrainingStaff = roleRepository.findRoleEntitiesByCode("TRAINING-STAFF");
+        result.put(roleEntity.getCode(), roleEntity.getName());
+        result.put(roleEntityTrainingStaff.getCode(),roleEntityTrainingStaff.getName());
         return result;
     }
 
