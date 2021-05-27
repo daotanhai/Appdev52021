@@ -1,9 +1,11 @@
 package com.laptrinhjavaweb.service.impl;
 
 import com.laptrinhjavaweb.converter.CourseCategoryConverter;
+import com.laptrinhjavaweb.dto.CountCourseCategoryDTO;
 import com.laptrinhjavaweb.dto.CourseCategoryDTO;
 import com.laptrinhjavaweb.entity.CourseCategoryEntity;
 import com.laptrinhjavaweb.repository.CourseCategoryRepository;
+import com.laptrinhjavaweb.repository.CourseRepository;
 import com.laptrinhjavaweb.service.ICourseCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,9 @@ public class CourseCategoryService implements ICourseCategoryService {
 
     @Autowired
     CourseCategoryRepository courseCategoryRepository;
+
+    @Autowired
+    CourseRepository courseRepository;
 
     @Override
     public List<CourseCategoryDTO> findAll(Pageable pageable) {
@@ -97,6 +102,22 @@ public class CourseCategoryService implements ICourseCategoryService {
             courseCategoryEntity = courseCategoryRepository.findCourseCategoryEntityByCourseCategoryDescription(courseCategoryDTO.getCourseCategoryDescription());
         }
         return courseCategoryConverter.toDTO(courseCategoryEntity);
+    }
+
+    @Override
+    public List<CountCourseCategoryDTO> countCourseCategory() {
+        List<CountCourseCategoryDTO> countCourseCategoryDTOS = new ArrayList<>();
+        List<CourseCategoryEntity> courseCategoryEntities = courseCategoryRepository.findAll();
+
+        for (int i=0; i<courseCategoryEntities.size();i++){
+            CountCourseCategoryDTO countCourseCategoryDTO = new CountCourseCategoryDTO();
+            long countNum = courseRepository.countCourseEntitiesByCourseCategory_CourseCategoryNameCode(courseCategoryEntities.get(i).getCourseCategoryNameCode());
+            countCourseCategoryDTO.setId(courseCategoryEntities.get(i).getId());
+            countCourseCategoryDTO.setCourseCategoryNameCode(courseCategoryEntities.get(i).getCourseCategoryNameCode());
+            countCourseCategoryDTO.setNumberOfCourses(countNum);
+            countCourseCategoryDTOS.add(i,countCourseCategoryDTO);
+        }
+        return countCourseCategoryDTOS;
     }
 
 }

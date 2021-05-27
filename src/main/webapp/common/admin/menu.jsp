@@ -13,7 +13,7 @@
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list"></i>
                 <span class="menu-text"></span>
-                Quản lý bài viết
+                Admin roles
                 <b class="arrow fa fa-angle-down"></b>
             </a>
             <b class="arrow"></b>
@@ -21,11 +21,11 @@
                 <li>
                     <a href="<c:url value='/quan-tri/user/list?page=1&limit=2'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Danh sách users
+                        User list
                     </a>
                     <a href="<c:url value='/quan-tri/user/edit'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Thêm mới trainer/training staff
+                        Add new trainer/training staff
                     </a>
                     <b class="arrow"></b>
                 </li>

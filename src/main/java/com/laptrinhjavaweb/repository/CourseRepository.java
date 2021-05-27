@@ -20,4 +20,6 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
 
     List<CourseEntity> findCourseEntitiesByCourseNameAndShortDescription(String courseName, String shortDescription);
 
+    long countCourseEntitiesByCourseCategory_CourseCategoryNameCode(String courseCategoryNameCode);
+
 }

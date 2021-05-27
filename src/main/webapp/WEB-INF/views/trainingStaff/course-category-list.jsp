@@ -99,6 +99,28 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Course Category Name Code</th>
+                                            <th>Number of course category</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach var="item" items="${countCourseCategories.listResult}">
+                                            <tr>
+                                                <td>${item.courseCategoryNameCode}</td>
+                                                <td>${item.numberOfCourseCategory}</td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

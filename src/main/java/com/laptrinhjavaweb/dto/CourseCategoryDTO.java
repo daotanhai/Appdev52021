@@ -31,6 +31,4 @@ public class CourseCategoryDTO extends AbstractDTO<CourseCategoryDTO> {
     public void setCourseCategoryDescription(String courseCategoryDescription) {
         this.courseCategoryDescription = courseCategoryDescription;
     }
-
-
 }

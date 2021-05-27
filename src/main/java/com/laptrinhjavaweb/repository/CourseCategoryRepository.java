@@ -4,6 +4,8 @@ import com.laptrinhjavaweb.entity.CourseCategoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.List;
+
 public interface CourseCategoryRepository extends JpaRepository<CourseCategoryEntity, Long>, JpaSpecificationExecutor<CourseCategoryEntity> {
     CourseCategoryEntity findByCourseCategoryNameCode(String courseCategoryNameCode);
 
@@ -12,4 +14,7 @@ public interface CourseCategoryRepository extends JpaRepository<CourseCategoryEn
     CourseCategoryEntity findCourseCategoryEntityByNameCourseCategory(String nameCourseCategory);
 
     CourseCategoryEntity findCourseCategoryEntityByCourseCategoryDescription(String courseCategoryDescription);
+
+    long countCourseCategoryEntityByCourseCategoryNameCode(String courseCategoryNameCode);
+
 }

@@ -1,5 +1,6 @@
 package com.laptrinhjavaweb.service;
 
+import com.laptrinhjavaweb.dto.CountCourseCategoryDTO;
 import com.laptrinhjavaweb.dto.CourseCategoryDTO;
 import org.springframework.data.domain.Pageable;
 
@@ -29,4 +30,5 @@ public interface ICourseCategoryService {
     Map<String, String> findAll();
 
     CourseCategoryDTO findCourseCategory(CourseCategoryDTO courseCategoryDTO);
+    List<CountCourseCategoryDTO> countCourseCategory();
 }

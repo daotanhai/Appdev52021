@@ -17,8 +17,8 @@ public class RoleService implements IRoleService {
 
     @Override
     public Map<String, String> findAll() {
-        Map<String, String> result = new HashMap<String, String>();
-        // Chỉ hiển thị ra cho ADMIN tạo 2 role là TRAINER vs TRAINING-STAFF
+        Map<String, String> result = new HashMap<>();
+        // Chỉ hiển thị ra cho ADMIN tạo user vs 2 role là TRAINER vs TRAINING-STAFF
         RoleEntity roleEntity = roleRepository.findRoleEntitiesByCode("TRAINER");
         RoleEntity roleEntityTrainingStaff = roleRepository.findRoleEntitiesByCode("TRAINING-STAFF");
         result.put(roleEntity.getCode(), roleEntity.getName());

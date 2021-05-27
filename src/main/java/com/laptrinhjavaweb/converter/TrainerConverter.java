@@ -41,6 +41,7 @@ public class TrainerConverter {
         result.setEmail(trainerDTO.getEmail());
         result.setExternalOrInternal(trainerDTO.getExternalOrInternal());
         //result.setTopics(trainerDTO.getTopicName());
+        // course
         return result;
     }
 

@@ -16,4 +16,5 @@ public class TraineeAPI {
     public TraineeDTO updateTrainee(@RequestBody TraineeDTO traineeDTO) {
         return iTraineeService.saveTrainee(traineeDTO);
     }
+
 }

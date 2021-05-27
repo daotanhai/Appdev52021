@@ -1,5 +1,6 @@
 package com.laptrinhjavaweb.controller.trainingStaff;
 
+import com.laptrinhjavaweb.dto.CountCourseCategoryDTO;
 import com.laptrinhjavaweb.dto.CourseCategoryDTO;
 import com.laptrinhjavaweb.service.ICourseCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,17 @@ public class CourseCategoryController {
     @RequestMapping(value = "/training-staff/coursecategory/list", method = RequestMethod.GET)
     public ModelAndView courseCategoryList(@RequestParam("page") int page, @RequestParam("limit") int limit) {
         CourseCategoryDTO courseCategoryDTO = new CourseCategoryDTO();
+
         ModelAndView mav = new ModelAndView("trainingStaff/course-category-list");
         courseCategoryDTO.setPage(page);
         courseCategoryDTO.setLimit(limit);
         Pageable pageable = new PageRequest(page - 1, limit);
         courseCategoryDTO.setListResult(iCourseCategoryService.findAll(pageable));
+
         courseCategoryDTO.setTotalItem(iCourseCategoryService.getTotalCourseCategory());
         courseCategoryDTO.setTotalPage((int) Math.ceil((double) courseCategoryDTO.getTotalItem() / courseCategoryDTO.getLimit()));
         mav.addObject("model", courseCategoryDTO);
+
         return mav;
     }
 

@@ -41,6 +41,10 @@
                         <i class="menu-icon fa fa-caret-right"></i>
                         Course category list
                     </a>
+                    <a href="<c:url value='/training-staff/count'/>">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Number of courses in category
+                    </a>
                     <a href="<c:url value='/training-staff/course/edit'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Add new course

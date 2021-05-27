@@ -1,5 +1,6 @@
 package com.laptrinhjavaweb.controller.trainingStaff;
 
+import com.laptrinhjavaweb.dto.CountCourseCategoryDTO;
 import com.laptrinhjavaweb.dto.CourseDTO;
 import com.laptrinhjavaweb.service.ICourseCategoryService;
 import com.laptrinhjavaweb.service.ICourseService;
@@ -24,14 +25,17 @@ public class CourseController {
     @RequestMapping(value = "/training-staff/course/list", method = RequestMethod.GET)
     public ModelAndView courseList(@RequestParam("page") int page, @RequestParam("limit") int limit) {
         CourseDTO courseDTO = new CourseDTO();
+
         ModelAndView mav = new ModelAndView("trainingStaff/course-list");
         courseDTO.setPage(page);
         courseDTO.setLimit(limit);
         Pageable pageable = new PageRequest(page - 1, limit);
         courseDTO.setListResult(iCourseService.findAll(pageable));
+
         courseDTO.setTotalItem(iCourseService.getTotalCourse());
         courseDTO.setTotalPage((int) Math.ceil((double) courseDTO.getTotalItem() / courseDTO.getLimit()));
         mav.addObject("model", courseDTO);
+
         return mav;
     }
 
