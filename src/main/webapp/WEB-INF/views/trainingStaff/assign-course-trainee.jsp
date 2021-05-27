@@ -32,11 +32,11 @@
                         <thead>
                         <tr>
                             <th><input type="checkbox" id="checkAll"></th>
-                            <th>ID Khóa học</th>
-                            <th>Tên khóa học</th>
-                            <th>Mô tả ngắn</th>
-                            <th>Thể loại</th>
-                            <th>The loai id</th>
+                            <th>Course ID</th>
+                            <th>Course Name</th>
+                            <th>Short Description</th>
+                            <th>Course Category</th>
+                            <th>Course category ID</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -163,14 +163,14 @@
 
     function warningBeforeDelete() {
         swal({
-            title: "Xác nhận xóa",
-            text: "Bạn có chắc chắn muốn xóa hay không",
+            title: "Confirm delete",
+            text: "Are you sure to delete?",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-success",
             cancelButtonClass: "btn-danger",
-            confirmButtonText: "Xác nhận",
-            cancelButtonText: "Hủy bỏ",
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel",
         }).then(function (isConfirm) {
             if (isConfirm) {
                 // get tất cả ids, là 1 mảng và put vào biến var ids
@@ -222,11 +222,11 @@
     }
 
     function successPopup() {
-        alert("Thành công!");
+        alert("Successful!");
     }
 
     function errorPopup() {
-        alert("Lỗi");
+        alert("Error");
     }
 </script>
 </body>

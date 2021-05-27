@@ -5,7 +5,7 @@
     <div class="footer-inner">
         <div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">laptrinhjavaweb</span>
+							<span class="blue bolder">App dev 5/2021</span>
 						</span>
 
             &nbsp; &nbsp;
