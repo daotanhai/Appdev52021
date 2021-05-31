@@ -32,11 +32,11 @@
                         <thead>
                         <tr>
                             <th><input type="checkbox" id="checkAll"></th>
-                            <th>ID Khóa học</th>
-                            <th>Tên khóa học</th>
-                            <th>Mô tả ngắn</th>
-                            <th>Thể loại</th>
-                            <th>ID thể loại</th>
+                            <th>Course ID</th>
+                            <th>Course name</th>
+                            <th>Course short description</th>
+                            <th>Course category</th>
+                            <th>Course category ID</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -57,7 +57,7 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <h4>Danh sách khóa học của trainer này</h4>
+                    <h4>Course list of this trainer</h4>
                     <%--TABLE cho khóa học đã đăng ký của học viên --%>
                     <div class="widget-box table-filter">
                         <div class="table-btn-controls">
@@ -106,12 +106,12 @@
                         <div class="col-md-offset-3 col-md-9">
                             <button class="btn btn-info" type="button"
                                     id="btnAddOrUpdateNew">
-                                <i class="ace-icon fa fa-check bigger-110"></i> Gán khóa học cho trainer
+                                <i class="ace-icon fa fa-check bigger-110"></i> Assign course for trainer
                             </button>
 
                             &nbsp; &nbsp; &nbsp;
                             <button class="btn" type="reset">
-                                <i class="ace-icon fa fa-undo bigger-110"></i> Hủy
+                                <i class="ace-icon fa fa-undo bigger-110"></i> Cancel
                             </button>
                         </div>
                     </div>
@@ -147,16 +147,17 @@
         addCourse(data2);
     });
 
+    // jquery
     function warningBeforeDelete() {
         swal({
-            title: "Xác nhận xóa",
-            text: "Bạn có chắc chắn muốn xóa hay không",
+            title: "Confirm delete",
+            text: "Are you sure to delete?",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-success",
             cancelButtonClass: "btn-danger",
-            confirmButtonText: "Xác nhận",
-            cancelButtonText: "Hủy bỏ",
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel",
         }).then(function (isConfirm) {
             if (isConfirm) {
                 // get tất cả ids, là 1 mảng và put vào biến var ids
@@ -206,11 +207,11 @@
     }
 
     function successPopup() {
-        alert("Thành công!");
+        alert("Successful!");
     }
 
     function errorPopup() {
-        alert("Lỗi");
+        alert("Error");
     }
 </script>
 </body>

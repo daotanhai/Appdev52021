@@ -42,7 +42,7 @@
                                 <input class="btn btn-info" type="submit" value="Submit"/>
                                 &nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset">
-                                    <i class="ace-icon fa fa-undo bigger-110">Hủy</i>
+                                    <i class="ace-icon fa fa-undo bigger-110">Cancel</i>
                                 </button>
                             </div>
                         </div>

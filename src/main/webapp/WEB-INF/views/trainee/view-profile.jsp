@@ -107,13 +107,13 @@
                                 <c:if test="${not empty model.id}">
                                     <button class="btn btn-info" type="button"
                                             id="btnAddOrUpdateNew">
-                                        <i class="ace-icon fa fa-check bigger-110"></i> Cập nhật profile của bạn!
+                                        <i class="ace-icon fa fa-check bigger-110"></i> Update your profile!
                                     </button>
                                 </c:if>
 
                                 &nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset">
-                                    <i class="ace-icon fa fa-undo bigger-110"></i> Hủy
+                                    <i class="ace-icon fa fa-undo bigger-110"></i> Cancel
                                 </button>
                             </div>
                         </div>
@@ -155,11 +155,11 @@
     }
 
     function successPopup() {
-        alert("Thành công!");
+        alert("Successful!");
     }
 
     function errorPopup() {
-        alert("Lỗi");
+        alert("Error");
     }
 </script>
 </body>

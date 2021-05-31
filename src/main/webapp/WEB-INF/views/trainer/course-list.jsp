@@ -8,7 +8,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Danh sách khóa học trainer</title>
+    <title>Your courses</title>
 </head>
 
 <body>
@@ -24,9 +24,9 @@
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th>Tên khóa học</th>
-                                            <th>Mô tả ngắn</th>
-                                            <th>Thể loại khóa học</th>
+                                            <th>Course name</th>
+                                            <th>Course description</th>
+                                            <th>Course category</th>
                                         </tr>
                                         </thead>
                                         <tbody>

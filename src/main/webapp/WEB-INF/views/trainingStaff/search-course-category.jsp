@@ -19,21 +19,21 @@
                                action="/training-staff/course-category/list" modelAttribute="courseCategory">
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"
-                                   for="nameCourseCategory">nameCourseCategory:</label>
+                                   for="nameCourseCategory">Name course category:</label>
                             <div class="col-sm-9">
                                 <form:input path="nameCourseCategory" cssClass="col-xs-10 col-sm-5"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"
-                                   for="courseCategoryNameCode">courseCategoryNameCode:</label>
+                                   for="courseCategoryNameCode">Course category nameCode:</label>
                             <div class="col-sm-9">
                                 <form:input path="courseCategoryNameCode" cssClass="col-xs-10 col-sm-5"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"
-                                   for="courseCategoryDescription">courseCategoryDescription:</label>
+                                   for="courseCategoryDescription">Course category description:</label>
                             <div class="col-sm-9">
                                 <form:input path="courseCategoryDescription" cssClass="col-xs-10 col-sm-5"/>
                             </div>
@@ -44,7 +44,7 @@
                                 <input class="btn btn-info" type="submit" value="Submit"/>
                                 &nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset">
-                                    <i class="ace-icon fa fa-undo bigger-110">Hủy</i>
+                                    <i class="ace-icon fa fa-undo bigger-110">Cancel</i>
                                 </button>
                             </div>
                         </div>

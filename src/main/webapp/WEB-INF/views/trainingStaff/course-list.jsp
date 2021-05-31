@@ -8,7 +8,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Danh sách khóa học</title>
+    <title>Course list</title>
 </head>
 
 <body>
@@ -25,14 +25,14 @@
                                         <c:url var="editCourseURL" value="/training-staff/course/edit"/>
                                         <a flag="info"
                                            class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
-                                           data-toggle="tooltip" title='Thêm khóa học' href='${editCourseURL}'>
+                                           data-toggle="tooltip" title='Add new course' href='${editCourseURL}'>
 															<span>
 																<i class="fa fa-plus-circle bigger-110 purple"></i>
 															</span>
                                         </a>
                                         <button id="btnDelete" type="button" onclick="warningBeforeDelete()"
                                                 class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
-                                                data-toggle="tooltip" title='Xóa khóa học'>
+                                                data-toggle="tooltip" title='Delete course'>
 															<span>
 																<i class="fa fa-trash-o bigger-110 pink"></i>
 															</span>
@@ -48,11 +48,11 @@
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox" id="checkAll"></th>
-                                            <th>Tên khóa học</th>
-                                            <th>Mô tả ngắn</th>
-                                            <th>Thể loại</th>
-                                            <th>The loai id</th>
-                                            <th>Thao tác</th>
+                                            <th>Course name</th>
+                                            <th>Short description</th>
+                                            <th>Course category</th>
+                                            <th>Course category ID</th>
+                                            <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -71,7 +71,7 @@
                                                         <c:param name="id" value="${item.id}"/>
                                                     </c:url>
                                                     <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                       title="Cập nhật khóa học" href='${updateCourseURL}'><i
+                                                       title="Update this course" href='${updateCourseURL}'><i
                                                             class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                     </a>
 
@@ -130,14 +130,14 @@
     // jquery
     function warningBeforeDelete() {
         swal({
-            title: "Xác nhận xóa",
-            text: "Bạn có chắc chắn muốn xóa hay không",
+            title: "Delete confirm",
+            text: "Are you sure to delete?",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-success",
             cancelButtonClass: "btn-danger",
-            confirmButtonText: "Xác nhận",
-            cancelButtonText: "Hủy bỏ",
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel",
         }).then(function (isConfirm) {
             if (isConfirm) {
                 // get tất cả ids, là 1 mảng và put vào biến var ids

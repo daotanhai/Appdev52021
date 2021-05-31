@@ -104,28 +104,14 @@
 
                     <div class="clearfix form-actions">
                         <div class="col-md-offset-3 col-md-9">
-                            <%-- <!-- ID khac null thi cap nhat trainer -->
-                             <c:if test="${not empty model.id}">
-                                 <button class="btn btn-info" type="button"
-                                         id="btnAddOrUpdateNew">
-                                     <i class="ace-icon fa fa-check bigger-110"></i> Cập nhật trainee
-                                 </button>
-                             </c:if>
-                             <!-- ID = null thi them trainer -->
-                             <c:if test="${empty model.id}">
-                                 <button class="btn btn-info" type="button"
-                                         id="btnAddOrUpdateNew">
-                                     <i class="ace-icon fa fa-check bigger-110"></i> Thêm mới trainee
-                                 </button>
-                             </c:if>--%>
                             <button class="btn btn-info" type="button"
                                     id="btnAddOrUpdateNew">
-                                <i class="ace-icon fa fa-check bigger-110"></i> Gán khóa học!
+                                <i class="ace-icon fa fa-check bigger-110"></i> Assign course
                             </button>
 
                             &nbsp; &nbsp; &nbsp;
                             <button class="btn" type="reset">
-                                <i class="ace-icon fa fa-undo bigger-110"></i> Hủy
+                                <i class="ace-icon fa fa-undo bigger-110"></i> Cancel
                             </button>
                         </div>
                     </div>

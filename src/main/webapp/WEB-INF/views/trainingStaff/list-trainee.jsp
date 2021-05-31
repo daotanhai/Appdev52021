@@ -10,7 +10,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Danh sách và tìm kiếm trainee</title>
+    <title>Trainee list</title>
 </head>
 
 <body>
@@ -24,26 +24,13 @@
                             <div class="table-btn-controls">
                                 <div class="pull-right tableTools-container">
                                     <div class="dt-buttons btn-overlap btn-group">
-                                        <%-- <c:url var="createNewURL" value="/quan-tri/bai-viet/chinh-sua"/>
-                                            <a flag="info" class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip" title='Thêm bài viết' href='${createNewURL}'>
-                                                        <span>
-                                                            <i class="fa fa-plus-circle bigger-110 purple"></i>
-                                                        </span>
-                                            </a> --%>
                                         <button id="btnDelete" type="button" onclick="warningBeforeDelete()"
                                                 class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
-                                                data-toggle="tooltip" title='Xóa trainees'>
+                                                data-toggle="tooltip" title='Delete trainees'>
 															<span>
 																<i class="fa fa-trash-o bigger-110 pink"></i>
 															</span>
                                         </button>
-                                        <!-- CLONE -->
-                                        <!-- <button id="btnDelete" type="button"
-                                            class="dt-button buttons-html5 btn btn-white btn-primary btn-bold" data-toggle="tooltip" title='Xóa trainees'>
-                                                    <span>
-                                                        <i class="fa fa-trash-o bigger-110 pink"></i>
-                                                    </span>
-                                        </button> -->
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +80,7 @@
                                                         <c:param name="id" value="${item.id}"/>
                                                     </c:url>
                                                     <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                       title="Cập nhật trainee này" href='${traineeEditURL2}'><i
+                                                       title="Update this trainer" href='${traineeEditURL2}'><i
                                                             class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                     </a>
                                                         <%--GÁN KHÓA HỌC BUTTON--%>
@@ -102,7 +89,7 @@
                                                         <c:param name="id" value="${item.id}"/>
                                                     </c:url>
                                                     <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                       title="Gán khóa học cho trainee này"
+                                                       title="Assign course for trainer"
                                                        href='${assignTraineeURL}'><i class="fa fa-pencil-square-o"
                                                                                      aria-hidden="true"></i>
                                                     </a>
@@ -160,14 +147,14 @@
     // jquery
     function warningBeforeDelete() {
         swal({
-            title: "Xác nhận xóa",
-            text: "Bạn có chắc chắn muốn xóa hay không",
+            title: "Delete confirm",
+            text: "Are you sure to delete?",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-success",
             cancelButtonClass: "btn-danger",
-            confirmButtonText: "Xác nhận",
-            cancelButtonText: "Hủy bỏ",
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel",
         }).then(function (isConfirm) {
             if (isConfirm) {
                 // get tất cả ids, là 1 mảng và put vào biến var ids
@@ -199,11 +186,11 @@
     }
 
     function successPopup() {
-        alert("Thành công!");
+        alert("Successful!");
     }
 
     function errorPopup() {
-        alert("Lỗi");
+        alert("Error");
     }
 </script>
 </body>

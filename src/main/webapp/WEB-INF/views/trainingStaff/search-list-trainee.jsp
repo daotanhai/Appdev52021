@@ -7,7 +7,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Kết quả tìm kiếm trainee</title>
+    <title>Results of searching trainee</title>
 </head>
 
 <body>

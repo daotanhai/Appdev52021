@@ -21,16 +21,16 @@
                 <li>
                     <a href="<c:url value='/trainee/profile/view'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Xem profile
+                       View profile
                     </a>
 
                     <a href="<c:url value='/trainee/course/list?page=1&limit=5'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Xem các khóa học
+                        View available courses
                     </a>
                     <a href="<c:url value='/trainee/course/my-course'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Xem khóa học của bạn
+                        View your courses
                     </a>
                     <b class="arrow"></b>
                 </li>

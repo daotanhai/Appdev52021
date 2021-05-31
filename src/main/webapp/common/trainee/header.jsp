@@ -9,7 +9,7 @@
             <a href="/trainee/trang-chu" class="navbar-brand">
                 <small>
                     <i class="fa fa-leaf"></i>
-                    Trang quản trị
+                    Trainee home page
                 </small>
             </a>
         </div>
@@ -17,12 +17,12 @@
             <ul class="nav ace-nav">
                 <li class="light-blue dropdown-modal">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        Xin chào, <%=SecurityUtils.getPrincipal().getFullName()%>
+                        Hello, <%=SecurityUtils.getPrincipal().getFullName()%>
                     </a>
                 <li class="light-blue dropdown-modal">
                     <a href='<c:url value='/thoat'/>'>
                         <i class="ace-icon fa fa-power-off"></i>
-                        Thoát
+                        Logout
                     </a>
                 </li>
                 </li>

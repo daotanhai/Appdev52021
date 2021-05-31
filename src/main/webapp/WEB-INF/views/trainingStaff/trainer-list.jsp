@@ -8,7 +8,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Danh sách trainer</title>
+    <title>Trainer list</title>
 </head>
 
 <body>
@@ -41,11 +41,11 @@
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox" id="checkAll"></th>
-                                            <th>Tên trainer</th>
+                                            <th>Trainer name</th>
                                             <th>Username</th>
-                                            <th>Nơi làm việc</th>
+                                            <th>Working place</th>
                                             <th>Education</th>
-                                            <th>SDT</th>
+                                            <th>Phone number</th>
                                             <th>Email</th>
                                             <th>External Or Internal</th>
                                             <th>Actions</th>
@@ -70,7 +70,7 @@
                                                         <c:param name="id" value="${item.id}"/>
                                                     </c:url>
                                                     <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                       title="Cập nhật trainer" href='${updateTrainerURL2}'><i
+                                                       title="Update trainer" href='${updateTrainerURL2}'><i
                                                             class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                     </a>
                                                     <c:url var="assignCourseTrainerURL"
@@ -78,7 +78,7 @@
                                                         <c:param name="id" value="${item.id}"/>
                                                     </c:url>
                                                     <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                       title="Gán khóa học cho trainer này"
+                                                       title="Assign course for this trainer"
                                                        href='${assignCourseTrainerURL}'><i class="fa fa-pencil-square-o"
                                                                                            aria-hidden="true"></i>
                                                     </a>
@@ -130,14 +130,14 @@
     // jquery
     function warningBeforeDelete() {
         swal({
-            title: "Xác nhận xóa",
-            text: "Bạn có chắc chắn muốn xóa hay không",
+            title: "Delete confirm",
+            text: "Are you sure to delete?",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-success",
             cancelButtonClass: "btn-danger",
-            confirmButtonText: "Xác nhận",
-            cancelButtonText: "Hủy bỏ",
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel",
         }).then(function (isConfirm) {
             if (isConfirm) {
                 // get tất cả ids, là 1 mảng và put vào biến var ids

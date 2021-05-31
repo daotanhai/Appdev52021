@@ -6,7 +6,7 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <html>
 <head>
-    <title>Chỉnh sửa trainer</title>
+    <title>Edit trainer</title>
 </head>
 <body>
 <div class="main-content">
@@ -30,14 +30,13 @@
                     </c:if>
                     <form:form class="form-horizontal" role="form" id="formSubmit" modelAttribute="model">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="name">Tên trainer</label>
+                            <label class="col-sm-3 control-label no-padding-right" for="name">Trainer name</label>
                             <div class="col-sm-9">
                                 <form:input path="name" cssClass="col-xs-10 col-sm-5"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="workingPlace">Nơi làm
-                                việc</label>
+                            <label class="col-sm-3 control-label no-padding-right" for="workingPlace">Working place</label>
                             <div class="col-sm-9">
                                 <!-- <input type="file" class="col-xs-10 col-sm-5" id="thumbnail" name="thumbnail"/> -->
                                 <form:input path="workingPlace" cssClass="col-xs-10 col-sm-5"/>
@@ -51,7 +50,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="telephone">SDT</label>
+                            <label class="col-sm-3 control-label no-padding-right" for="telephone">Phone number</label>
                             <div class="col-sm-9">
                                 <!-- <input type="file" class="col-xs-10 col-sm-5" id="thumbnail" name="thumbnail"/> -->
                                 <form:input path="telephone" cssClass="col-xs-10 col-sm-5"/>
@@ -79,7 +78,7 @@
                                 <c:if test="${not empty model.id}">
                                     <button class="btn btn-info" type="button" id="btnAddOrUpdateNew">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
-                                        Cập nhật trainer
+                                        Update trainer
                                     </button>
                                 </c:if>
 
@@ -128,11 +127,11 @@
     }
 
     function successPopup() {
-        alert("Thành công!");
+        alert("Successful!");
     }
 
     function errorPopup() {
-        alert("Lỗi");
+        alert("Error");
     }
 </script>
 </body>

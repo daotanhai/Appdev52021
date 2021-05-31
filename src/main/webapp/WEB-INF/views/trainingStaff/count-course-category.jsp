@@ -20,21 +20,7 @@
             <div class="page-content">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="widget-box table-filter">
-                            <div class="table-btn-controls">
-                                <div class="pull-right tableTools-container">
-                                    <div class="dt-buttons btn-overlap btn-group">
-                                        <button id="btnDelete" type="button" onclick="warningBeforeDelete()"
-                                                class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
-                                                data-toggle="tooltip" title='Xóa categories'>
-															<span>
-																<i class="fa fa-trash-o bigger-110 pink"></i>
-															</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="table-responsive">

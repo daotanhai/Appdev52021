@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Đăng nhập</title>
+    <title>Login</title>
 </head>
 <body>
 <div class="container">
@@ -24,13 +24,13 @@
             </c:if>
             <form action="j_spring_security_check" id="formLogin" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="userName" name="j_username" placeholder="Tên đăng nhập">
+                    <input type="text" class="form-control" id="userName" name="j_username" placeholder="Username">
                 </div>
 
                 <div class="form-group">
-                    <input type="password" class="form-control" id="password" name="j_password" placeholder="Mật khẩu">
+                    <input type="password" class="form-control" id="password" name="j_password" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                <button type="submit" class="btn btn-primary">Login</button>
             </form>
         </div>
     </div>

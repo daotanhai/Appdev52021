@@ -37,7 +37,7 @@
                             <label for="role" class="col-sm-3 control-label no-padding-right">Role:</label>
                             <div class="col-sm-9">
                                 <form:select path="role" id="role">
-                                    <form:option value="" label="-- Chọn role --"/>
+                                    <form:option value="" label="-- Choose role --"/>
                                     <form:options items="${roles}"/>
                                 </form:select>
                             </div>
@@ -53,24 +53,24 @@
                         <div class="clearfix form-actions">
                             <div class="col-md-offset-3 col-md-9">
                                 <!-- ID khac null thi cap nhat trainer -->
-                                <c:if test="${not empty model.id}">
+                                <c:if test="${not empty models.id}">
                                     <button class="btn btn-info" type="button" id="btnAddOrUpdateNew">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
-                                        Cập nhật trainer/training staff
+                                        Update trainer/training staff
                                     </button>
                                 </c:if>
                                 <!-- ID = null thi them trainer -->
-                                <c:if test="${empty model.id}">
+                                <c:if test="${empty models.id}">
                                     <button class="btn btn-info" type="button" id="btnAddOrUpdateNew">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
-                                        Thêm mới trainer/training staff
+                                        Add new trainer/training staff
                                     </button>
                                 </c:if>
 
                                 &nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset">
                                     <i class="ace-icon fa fa-undo bigger-110"></i>
-                                    Hủy
+                                    Cancel
                                 </button>
                             </div>
                         </div>
@@ -136,11 +136,11 @@
     }
 
     function successPopup() {
-        alert("Thành công!");
+        alert("Successful!");
     }
 
     function errorPopup() {
-        alert("Lỗi");
+        alert("Error");
     }
 </script>
 </body>

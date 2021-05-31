@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"
-                                   for="toeicScore">toeicScore:</label>
+                                   for="toeicScore">Toeic Score:</label>
                             <div class="col-sm-9">
                                 <form:input path="toeicScore" cssClass="col-xs-10 col-sm-5"/>
                             </div>
@@ -44,7 +44,7 @@
                                 <input class="btn btn-info" type="submit" value="Submit"/>
                                 &nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset">
-                                    <i class="ace-icon fa fa-undo bigger-110">Hủy</i>
+                                    <i class="ace-icon fa fa-undo bigger-110">Cancel</i>
                                 </button>
                             </div>
                         </div>

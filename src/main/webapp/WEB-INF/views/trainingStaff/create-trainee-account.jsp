@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"
-                                   for="ge">Age:</label>
+                                   for="age">Age:</label>
                             <div class="col-sm-9">
                                 <form:input path="age" cssClass="col-xs-10 col-sm-5"/>
                             </div>
@@ -96,7 +96,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"
-                                   for="toeicScore">toeicScore:</label>
+                                   for="toeicScore">TOEIC Score:</label>
                             <div class="col-sm-9">
                                 <form:input path="toeicScore" cssClass="col-xs-10 col-sm-5"/>
                             </div>
@@ -118,32 +118,6 @@
                                             cssClass="col-xs-10 col-sm-5"/>
                             </div>
                         </div>
-
-                        <!-- List course for trainee -->
-                        <%--<table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox" id="checkAll"></th>
-                                <th>Tên khóa học</th>
-                                <th>Mô tả ngắn</th>
-                                <th>Thể loại</th>
-                                <th>The loai id</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach var="item" items="${courseList.listResult}">
-                                <tr>
-                                    <!-- value = id cua bai viet  -->
-                                    <!-- nó lặp, nên cần phân biệt id checkbox nào của bài viết nào do đó, dùng checkbox+id của bài viết -->
-                                    <td><input type="checkbox" id="checkbox_${item.id}" value="${item.id}" ></td>
-                                    <td>${item.courseName}</td>
-                                    <td>${item.shortDescription}</td>
-                                    <td>${item.courseCategoryNameCode}</td>
-                                    <td>${item.courseCategoryId}</td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>--%>
                         <form:hidden path="id" id="traineeId"/>
                         <div class="clearfix form-actions">
                             <div class="col-md-offset-3 col-md-9">
@@ -151,20 +125,20 @@
                                 <c:if test="${not empty model.id}">
                                     <button class="btn btn-info" type="button"
                                             id="btnAddOrUpdateNew">
-                                        <i class="ace-icon fa fa-check bigger-110"></i> Cập nhật trainee
+                                        <i class="ace-icon fa fa-check bigger-110"></i> Update trainee
                                     </button>
                                 </c:if>
                                 <!-- ID = null thi them trainer -->
                                 <c:if test="${empty model.id}">
                                     <button class="btn btn-info" type="button"
                                             id="btnAddOrUpdateNew">
-                                        <i class="ace-icon fa fa-check bigger-110"></i> Thêm mới trainee
+                                        <i class="ace-icon fa fa-check bigger-110"></i> Add new trainee
                                     </button>
                                 </c:if>
 
                                 &nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset">
-                                    <i class="ace-icon fa fa-undo bigger-110"></i> Hủy
+                                    <i class="ace-icon fa fa-undo bigger-110"></i> Cancel
                                 </button>
                             </div>
                         </div>
@@ -229,11 +203,11 @@
     }
 
     function successPopup() {
-        alert("Thành công!");
+        alert("Successful!");
     }
 
     function errorPopup() {
-        alert("Lỗi");
+        alert("Error");
     }
 </script>
 </body>

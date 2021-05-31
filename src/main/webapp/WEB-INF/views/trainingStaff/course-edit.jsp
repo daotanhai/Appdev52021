@@ -6,7 +6,7 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <html>
 <head>
-    <title>Chỉnh sửa khóa học</title>
+    <title>Edit course</title>
 </head>
 <body>
 <div class="main-content">
@@ -30,25 +30,22 @@
                     </c:if>
                     <form:form class="form-horizontal" role="form" id="formSubmit" modelAttribute="model">
                         <div class="form-group">
-                            <label for="courseCategoryNameCode" class="col-sm-3 control-label no-padding-right">Thể loại
-                                khóa học:</label>
+                            <label for="courseCategoryNameCode" class="col-sm-3 control-label no-padding-right">Course category:</label>
                             <div class="col-sm-9">
                                 <form:select path="courseCategoryNameCode" id="courseCategoryNameCode">
-                                    <form:option value="" label="-- Chọn thể loại --"/>
+                                    <form:option value="" label="-- Choose categpry --"/>
                                     <form:options items="${categories}"/>
                                 </form:select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="courseName">Tên khóa
-                                học</label>
+                            <label class="col-sm-3 control-label no-padding-right" for="courseName">Course name</label>
                             <div class="col-sm-9">
                                 <form:input path="courseName" cssClass="col-xs-10 col-sm-5"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="shortDescription">Mô tả ngắn loại
-                                khóa học</label>
+                            <label class="col-sm-3 control-label no-padding-right" for="shortDescription">Short description</label>
                             <div class="col-sm-9">
                                 <!-- <input type="file" class="col-xs-10 col-sm-5" id="thumbnail" name="thumbnail"/> -->
                                 <form:input path="shortDescription" cssClass="col-xs-10 col-sm-5"/>
@@ -61,21 +58,21 @@
                                 <c:if test="${not empty model.id}">
                                     <button class="btn btn-info" type="button" id="btnAddOrUpdateNew">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
-                                        Cập nhật khóa học
+                                        Update course
                                     </button>
                                 </c:if>
                                 <!-- ID = null thi them bai viet -->
                                 <c:if test="${empty model.id}">
                                     <button class="btn btn-info" type="button" id="btnAddOrUpdateNew">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
-                                        Thêm khóa học
+                                        Add new course
                                     </button>
                                 </c:if>
 
                                 &nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset">
                                     <i class="ace-icon fa fa-undo bigger-110"></i>
-                                    Hủy
+                                    Cancel
                                 </button>
                             </div>
                         </div>

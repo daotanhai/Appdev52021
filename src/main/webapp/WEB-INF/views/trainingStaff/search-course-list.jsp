@@ -7,7 +7,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Kết quả tìm kiếm courses</title>
+    <title>Results of searching course</title>
 </head>
 
 <body>

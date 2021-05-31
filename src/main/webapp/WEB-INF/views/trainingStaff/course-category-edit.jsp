@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="courseCategoryListURL" value="/training-staff/coursecategory/list"/>
-<c:url var="courseCategoryEditNewURL" value="/training-staff/coursecategory/edit"/>
+<c:url var="courseCategoryEditURL" value="/training-staff/coursecategory/edit"/>
 <c:url var="courseCategoryAPI" value="/api/courseCategory"/>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <html>
 <head>
-    <title>Chỉnh sửa course category</title>
+    <title>Edit course category</title>
 </head>
 <body>
 <div class="main-content">
@@ -18,15 +18,6 @@
                 } catch (e) {
                 }
             </script>
-            <!--
-                            <ul class="breadcrumb">
-                                <li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">Home</a>
-                                </li>
-
-                                <li><a href="#">Forms</a></li>
-                                <li class="active">Form Elements</li>
-                            </ul> -->
-            <!-- /.breadcrumb -->
         </div>
         <div class="page-content">
             <div class="row">
@@ -38,23 +29,19 @@
                     </c:if>
                     <form:form class="form-horizontal" role="form" id="formSubmit" modelAttribute="model">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Tên loại khóa
-                                học</label>
+                            <label class="col-sm-3 control-label no-padding-right" for="nameCourseCategory">Course category name</label>
                             <div class="col-sm-9">
                                 <form:input path="nameCourseCategory" cssClass="col-xs-10 col-sm-5"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Mã loại khóa
-                                học</label>
+                            <label class="col-sm-3 control-label no-padding-right" for="courseCategoryNameCode">Course category name code</label>
                             <div class="col-sm-9">
-                                <!-- <input type="file" class="col-xs-10 col-sm-5" id="thumbnail" name="thumbnail"/> -->
                                 <form:input path="courseCategoryNameCode" cssClass="col-xs-10 col-sm-5"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="shortDescription" class="col-sm-3 control-label no-padding-right">Mô tả ngắn về
-                                loại khóa học</label>
+                            <label for="shortDescription" class="col-sm-3 control-label no-padding-right">Course category short description</label>
                             <div class="col-sm-9">
                                 <form:textarea path="courseCategoryDescription" rows="5" cols="10"
                                                cssClass="form-control" id="shortDescription" name="shortDescription"/>
@@ -67,21 +54,21 @@
                                 <c:if test="${not empty model.id}">
                                     <button class="btn btn-info" type="button" id="btnAddOrUpdateNew">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
-                                        Cập nhật thể loại
+                                        Update course category
                                     </button>
                                 </c:if>
                                 <!-- ID = null thi them mới -->
                                 <c:if test="${empty model.id}">
                                     <button class="btn btn-info" type="button" id="btnAddOrUpdateNew">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
-                                        Thêm mới thể loại
+                                        Add new course category
                                     </button>
                                 </c:if>
 
                                 &nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset">
                                     <i class="ace-icon fa fa-undo bigger-110"></i>
-                                    Hủy
+                                    Cancel
                                 </button>
                             </div>
                         </div>
@@ -116,11 +103,11 @@
             data: JSON.stringify(data),
             dataType: 'json',
             success: function (result) {
-                window.location.href = "${courseCategoryEditNewURL}?id=" + result.id + "&message=insert_success";
+                window.location.href = "${courseCategoryEditURL}?id=" + result.id + "&message=insert_success";
                 successPopup();
             },
             error: function (error) {
-                window.location.href = "${courseCategoryListNewURL}?page=1&limit=5&message=error_system";
+                window.location.href = "${courseCategoryListURL}?page=1&limit=5&message=error_system";
             }
         });
     }
@@ -133,22 +120,22 @@
             data: JSON.stringify(data),
             dataType: 'json',
             success: function (result) {
-                window.location.href = "${courseCategoryEditNewURL}?id=" + result.id + "&message=update_success";
+                window.location.href = "${courseCategoryEditURL}?id=" + result.id + "&message=update_success";
                 successPopup()
             },
             error: function (error) {
-                window.location.href = "${courseCategoryEditNewURL}?id=" + result.id + "&message=error_system";
+                window.location.href = "${courseCategoryListURL}?page=1&limit=5&message=error_system";
                 successPopup()
             }
         });
     }
 
     function successPopup() {
-        alert("Thành công!");
+        alert("Successful!");
     }
 
     function errorPopup() {
-        alert("Lỗi");
+        alert("Error");
     }
 </script>
 </body>
