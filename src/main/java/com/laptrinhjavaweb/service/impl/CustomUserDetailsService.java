@@ -8,6 +8,7 @@ import com.laptrinhjavaweb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
+//    private UserEntity userEntityOTP;
     public long userId;
     // Authentication
     @Autowired
@@ -31,7 +33,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userId = userId;
     }
     // Tu dong tim theo password, k can them nua. No hoat dong ngam
-
+/*    public String getPassword(){
+        if (userEntityOTP.isOTPRequired()){
+            return userEntityOTP.getOneTimePassword();
+        }
+        return userEntityOTP.getPassword();
+    }*/
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findOneByUserNameAndStatus(username, SystemConstant.ACTIVE_STATUS);

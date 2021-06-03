@@ -1,10 +1,13 @@
 package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name = "user")
+// Nếu làm với postgre, phải đặt tên lại cho bảng user thế này, nếu không sẽ lỗi ko tạo đc bảng USER
+@Table(name = "`Appuser`")
 public class UserEntity extends BaseEntity {
+    private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 phut'
 
     @Column(name = "username")
     private String userName;
@@ -17,6 +20,32 @@ public class UserEntity extends BaseEntity {
 
     @Column
     private Integer status;
+
+    /*@Column(name = "one_time_password")
+    private String oneTimePassword;
+
+    @Column(name = "otp_requested_time")
+    private Date otpRequestedTime;
+
+    @Column(name = "email")
+    private String email;*/
+
+    /*//check OTP expired or not
+    public boolean isOTPRequired() {
+        if (this.getOneTimePassword() == null) {
+            return false;
+        }
+
+        long currentTimeInMillis = System.currentTimeMillis();
+        long otpRequestedTimeInMillis = this.otpRequestedTime.getTime();
+
+        if (otpRequestedTimeInMillis + OTP_VALID_DURATION < currentTimeInMillis) {
+            // OTP expires
+            return false;
+        }
+
+        return true;
+    }*/
 
     /*
      * @ManyToMany(fetch = FetchType.LAZY) // Tạo table trung gian giữa user và
@@ -73,4 +102,27 @@ public class UserEntity extends BaseEntity {
         this.roleEntity = roleEntity;
     }
 
+    /*public String getOneTimePassword() {
+        return oneTimePassword;
+    }
+
+    public void setOneTimePassword(String oneTimePassword) {
+        this.oneTimePassword = oneTimePassword;
+    }
+
+    public Date getOtpRequestedTime() {
+        return otpRequestedTime;
+    }
+
+    public void setOtpRequestedTime(Date otpRequestedTime) {
+        this.otpRequestedTime = otpRequestedTime;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }*/
 }

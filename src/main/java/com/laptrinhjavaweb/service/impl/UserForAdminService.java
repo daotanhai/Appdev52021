@@ -49,6 +49,7 @@ public class UserForAdminService implements IUserForAdminService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public List<UserDTO> findAll(Pageable pageable) {
         List<UserDTO> models = new ArrayList<UserDTO>();
@@ -160,6 +161,8 @@ public class UserForAdminService implements IUserForAdminService {
         return (int) userRepository.count();
     }
 
+
+
     @Override
     public void saveTrainingStaffRoleAndUserNameAndPassword(UserDTO userDTO) {
         TrainingStaffEntity trainingStaffEntity = new TrainingStaffEntity();
@@ -207,4 +210,39 @@ public class UserForAdminService implements IUserForAdminService {
 			userRepository.delete(id);*/
         }
     }
+    /*// tạo ra chuỗi string OTP với 8 ký tự, sau đó set vào user + expired time
+    @Override
+    public void generateOneTimePassword(UserEntity userEntity) throws UnsupportedEncodingException, MessagingException {
+        String OTP = RandomStringUtils.random(8);
+        String encodedOTP = bCryptPasswordEncoder.encode(OTP);
+        userEntity.setOneTimePassword(encodedOTP);
+        userEntity.setOtpRequestedTime(new Date());
+        userRepository.save(userEntity);
+        sendOTPEmail(userEntity,OTP);
+    }
+
+    @Override
+    public void sendOTPEmail(UserEntity userEntity, String OTP) throws UnsupportedEncodingException, MessagingException{
+        MimeMessage message = mailSender.mailSender().createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom("daotanhai123@gmail.com","Helper");
+        helper.setTo(userEntity.getEmail());
+        String subject = "Here's your One Time Password (OTP) - Expire in 5 minutes!";
+        String content = "<p>Hello " + userEntity.getUserName() + "</p>"
+                + "<p>For security reason, you're required to use the following "
+                + "One Time Password to login:</p>"
+                + "<p><b>" + OTP + "</b></p>"
+                + "<br>"
+                + "<p>Note: this OTP is set to expire in 5 minutes.</p>";
+        helper.setSubject(subject);
+        helper.setText(content,true);
+        mailSender.mailSender().send(message);
+    }
+
+    @Override
+    public void clearOTP(UserEntity userEntity) {
+        userEntity.setOneTimePassword(null);
+        userEntity.setOtpRequestedTime(null);
+        userRepository.save(userEntity);
+    }*/
 }

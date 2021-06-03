@@ -1,6 +1,8 @@
 package com.laptrinhjavaweb.controller.admin;
 
+import com.laptrinhjavaweb.doSomeThingOnce.DoSomethingOnce;
 import com.laptrinhjavaweb.dto.UserDTO;
+import com.laptrinhjavaweb.initialDatabase.InitialDatabase;
 import com.laptrinhjavaweb.service.IRoleService;
 import com.laptrinhjavaweb.service.IUserForAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class UserController {
 
     @Autowired
     private IRoleService roleService;
+
+    @Autowired
+    private DoSomethingOnce doSomethingOnce;
 
     @RequestMapping(value = "/quan-tri/user/list", method = RequestMethod.GET)
     public ModelAndView showList(@RequestParam("page") int page, @RequestParam("limit") int limit) {
@@ -47,6 +52,13 @@ public class UserController {
         }
         mav.addObject("roles", roleService.findAll());
         mav.addObject("models", userDTO);
+        return mav;
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView createAdmin() {
+        ModelAndView mav = new ModelAndView("create/done");
+        doSomethingOnce.doSomethingOnce();
         return mav;
     }
 }

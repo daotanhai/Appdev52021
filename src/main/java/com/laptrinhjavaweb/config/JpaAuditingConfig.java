@@ -1,5 +1,7 @@
 package com.laptrinhjavaweb.config;
 
+import com.laptrinhjavaweb.initialDatabase.InitialDatabase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -18,6 +20,7 @@ public class JpaAuditingConfig {
     }
 
     public static class AuditorAwareImpl implements AuditorAware<String> {
+
 
         @Override
         public String getCurrentAuditor() {
