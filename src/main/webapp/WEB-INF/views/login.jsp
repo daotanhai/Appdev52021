@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="<c:url value='/template/login/styles.css'/>" rel="stylesheet"/>
     <title>Login</title>
 </head>
 <body>
@@ -22,15 +24,15 @@
                     You do not have permission to access this page!
                 </div>
             </c:if>
-            <form action="j_spring_security_check" id="formLogin" method="post">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="userName" name="j_username" placeholder="Username">
-                </div>
+            <form class="box" action="j_spring_security_check" id="formLogin" method="post">
+                <h1>Login</h1>
+                <input type="text" name="j_username" placeholder="Username">
+                <input type="password" name="j_password" placeholder="Password">
+                <input type="submit" value="Login">
 
-                <div class="form-group">
-                    <input type="password" class="form-control" id="password" name="j_password" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <%--<input type="text" id="userName" name="j_username" placeholder="Username">
+                <input type="password" id="password" name="j_password" placeholder="Password">
+                <button type="submit" class="btn btn-primary">Login</button>--%>
             </form>
         </div>
     </div>
