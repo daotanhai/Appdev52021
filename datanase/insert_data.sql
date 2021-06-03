@@ -1,4 +1,4 @@
-use appdev;
+use postgres;
 -- Pass 123456
 -- Ma hoa MD5
 insert into role(code,name) values('ADMIN','quan tri');

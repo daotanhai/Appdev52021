@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.springframework.org/schema/security"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/security
+            http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <http auto-config="false" use-expressions="true" disable-url-rewriting="true">
+
+        <!--  Mình định nghĩa là chỉ khi đã đăng nhập với role là admin thì mới được vào,
+        nếu user khác admin cố tình vào url này, sẽ bị thông báo accessDenied
+         -->
+        <!-- Phân quyền cho ADMIN -->
+        <intercept-url pattern="/quan-tri/trang-chu" access="hasAnyRole('ADMIN')"/>
+        <intercept-url pattern="/quan-tri/user/edit" access="hasAnyRole('ADMIN')"/>
+        <intercept-url pattern="/quan-tri/bai-viet/danh-sach" access="hasAnyRole('ADMIN')"/>
+        <intercept-url pattern="/quan-tri/user/list" access="hasAnyRole('ADMIN')"/>
+        <intercept-url pattern="/quan-tri/bai-viet/chinh-sua" access="hasAnyRole('ADMIN')"/>
+        <!-- kết thúc phân quyền cho ADMIN -->
+
+        <!-- Phân quyền cho TRAINING-STAFF -->
+        <intercept-url pattern="/training-staff/trang-chu" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/trainee/edit" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/trainee/list" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/coursecategory/edit" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/coursecategory/list" access="hasAnyRole('TRAINING-STAFF')"/>
+        <!-- kết thúc phân quyền cho TRAINING-STAFF -->
+
+        <access-denied-handler error-page="/accessDenied"/>
+        <form-login login-page="/dang-nhap"
+                    username-parameter="j_username"
+                    password-parameter="j_password"
+                    login-processing-url="/j_spring_security_check"
+                    authentication-success-handler-ref="customSuccessHandler"
+                    authentication-failure-url="/dang-nhap?incorrectAccount"/>
+        <session-management invalid-session-url="/dang-nhap?sessionTimeout"/>
+        <logout delete-cookies="JSESSIONID"/>
+    </http>
+    <!-- MD5 -->
+    <authentication-manager>
+        <authentication-provider user-service-ref="customUserDetailsService">
+            <password-encoder ref="bcryptEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <beans:bean id="customUserDetailsService" class="com.laptrinhjavaweb.service.impl.CustomUserDetailsService"/>
+    <beans:bean id="customSuccessHandler" class="com.laptrinhjavaweb.security.CustomSuccessHandler"/>
+
+</beans:beans>
