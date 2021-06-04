@@ -55,6 +55,10 @@ public class TraineeEntity extends BaseEntity {
     @JoinColumn(name = "role_id")
     private RoleEntity roleTrainee;
 
+    // map trainee vs request course | 1 trainee - n request
+    @OneToMany(mappedBy = "traineeRequest")
+    private List<RequestCourseEntity> requestCourseEntity = new ArrayList<>();
+
     public String getUserName() {
         return userName;
     }
@@ -157,5 +161,13 @@ public class TraineeEntity extends BaseEntity {
 
     public void setRoleTrainee(RoleEntity roleTrainee) {
         this.roleTrainee = roleTrainee;
+    }
+
+    public List<RequestCourseEntity> getRequestCourseEntity() {
+        return requestCourseEntity;
+    }
+
+    public void setRequestCourseEntity(List<RequestCourseEntity> requestCourseEntity) {
+        this.requestCourseEntity = requestCourseEntity;
     }
 }

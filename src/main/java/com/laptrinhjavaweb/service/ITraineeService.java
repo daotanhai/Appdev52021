@@ -37,4 +37,8 @@ public interface ITraineeService {
 
     // delete course assigned to trainee
     void deleteTraineeCourse(long[] ids);
+
+    // find trainee by user id
+     TraineeDTO findTraineeByUserId(long id);
+
 }

@@ -14,6 +14,7 @@
         <class>com.laptrinhjavaweb.entity.TrainerEntity</class>
         <class>com.laptrinhjavaweb.entity.TrainingStaffEntity</class>
         <class>com.laptrinhjavaweb.entity.TraineeCourseEntity</class>
+        <class>com.laptrinhjavaweb.entity.RequestCourseEntity</class>
     </persistence-unit>
 
 </persistence>

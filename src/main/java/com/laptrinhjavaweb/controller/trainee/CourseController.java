@@ -1,7 +1,10 @@
 package com.laptrinhjavaweb.controller.trainee;
 
 import com.laptrinhjavaweb.dto.CourseDTO;
+import com.laptrinhjavaweb.dto.TraineeDTO;
 import com.laptrinhjavaweb.service.ICourseService;
+import com.laptrinhjavaweb.service.ITraineeService;
+import com.laptrinhjavaweb.service.ITrainerService;
 import com.laptrinhjavaweb.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -21,11 +24,15 @@ public class CourseController {
     CustomUserDetailsService customUserDetailsService;
     @Autowired
     private ICourseService iCourseService;
+    @Autowired
+    private ITraineeService iTraineeService;
 
     @RequestMapping(value = "/trainee/course/list", method = RequestMethod.GET)
     public ModelAndView courseList(@RequestParam("page") int page, @RequestParam("limit") int limit) {
+        long id = customUserDetailsService.getUserId();
         CourseDTO courseDTO = new CourseDTO();
-        ModelAndView mav = new ModelAndView("trainee/course-list");
+        TraineeDTO traineeDTO = iTraineeService.findTraineeByUserId(id);
+        ModelAndView mav = new ModelAndView("/trainee/course-list");
         courseDTO.setPage(page);
         courseDTO.setLimit(limit);
         Pageable pageable = new PageRequest(page - 1, limit);
@@ -33,6 +40,7 @@ public class CourseController {
         courseDTO.setTotalItem(iCourseService.getTotalCourse());
         courseDTO.setTotalPage((int) Math.ceil((double) courseDTO.getTotalItem() / courseDTO.getLimit()));
         mav.addObject("model", courseDTO);
+        mav.addObject("traineeDTO",traineeDTO);
         return mav;
     }
 
@@ -42,11 +50,13 @@ public class CourseController {
         ModelAndView mav = new ModelAndView("/trainee/course-list");
         // id cua trainee
         long id = customUserDetailsService.getUserId();
+        TraineeDTO traineeDTO = iTraineeService.findTraineeByUserId(id);
         List<CourseDTO> courseDTOList = new ArrayList<>();
         CourseDTO courseDTO = new CourseDTO();
         courseDTOList = iCourseService.findCoursesByTraineeId(id);
         courseDTO.setListResult(courseDTOList);
         mav.addObject("model", courseDTO);
+        mav.addObject("traineeDTO",traineeDTO);
         return mav;
     }
 }

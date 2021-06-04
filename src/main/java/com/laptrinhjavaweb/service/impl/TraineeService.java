@@ -38,6 +38,7 @@ public class TraineeService implements ITraineeService {
     TraineeCourseConverter traineeCourseConverter;
     @Autowired
     UserRepository userRepository;
+
     private long traineeId;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -121,6 +122,14 @@ public class TraineeService implements ITraineeService {
         }
     }
 
+    // truyen vao user id, tim ra trainee DTO
+    @Override
+    public TraineeDTO findTraineeByUserId(long id) {
+        UserEntity userEntity = userRepository.findOne(id);
+        TraineeEntity traineeEntity = traineeRepository.findTraineeEntityByUserName(userEntity.getUserName());
+        return traineeConverter.toDTO(traineeEntity);
+    }
+
     @Override
     @Transactional
     public void deleteTrainee(long[] ids) {
@@ -176,4 +185,6 @@ public class TraineeService implements ITraineeService {
     public void saveTraineeEntity(TraineeEntity traineeEntity) {
         this.traineeRepository.save(traineeEntity);
     }
+
+
 }

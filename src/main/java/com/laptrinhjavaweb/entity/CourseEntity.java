@@ -26,6 +26,9 @@ public class CourseEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categorycourse_id")
     private CourseCategoryEntity courseCategory;
+    
+    @OneToMany(mappedBy = "courseRequest")
+    private List<RequestCourseEntity> requestCourseEntity = new ArrayList<>();
 
     public String getCourseName() {
         return courseName;
@@ -65,5 +68,13 @@ public class CourseEntity extends BaseEntity {
 
     public void setCourseCategory(CourseCategoryEntity courseCategory) {
         this.courseCategory = courseCategory;
+    }
+
+    public List<RequestCourseEntity> getRequestCourseEntity() {
+        return requestCourseEntity;
+    }
+
+    public void setRequestCourseEntity(List<RequestCourseEntity> requestCourseEntity) {
+        this.requestCourseEntity = requestCourseEntity;
     }
 }
