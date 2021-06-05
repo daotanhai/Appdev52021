@@ -58,6 +58,8 @@ public class RequestCourseService implements IRequestCourseService {
             requestCourseDTO = requestCourseConverter.toDTO(items);
             requestCourseDTO.setCourseId(items.getCourseRequest().getId());
             requestCourseDTO.setTraineeId(items.getTraineeRequest().getId());
+            requestCourseDTO.setCourseName(items.getCourseRequest().getCourseName());
+            requestCourseDTO.setTraineeName(items.getTraineeRequest().getName());
             models.add(requestCourseDTO);
         }
         return models;

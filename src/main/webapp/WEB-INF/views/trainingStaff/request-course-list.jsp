@@ -27,16 +27,16 @@
                                         <thead>
                                         <tr>
                                             <th>Request ID</th>
-                                            <th>Course ID</th>
-                                            <th>Trainee ID</th>
+                                            <th>Course ID - Course name</th>
+                                            <th>Trainee ID - Trainee name</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach var="item" items="${model.listResult}">
                                             <tr>
                                                 <td>${item.id}</td>
-                                                <td>${item.courseId}</td>
-                                                <td>${item.traineeId}</td>
+                                                <td>${item.courseId} - ${item.courseName}</td>
+                                                <td>${item.traineeId} - ${item.traineeName}</td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>

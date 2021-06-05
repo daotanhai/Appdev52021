@@ -3,7 +3,8 @@ package com.laptrinhjavaweb.dto;
 public class RequestCourseDTO extends AbstractDTO<RequestCourseDTO>{
     private Long courseId;
     private Long traineeId;
-    private String comment;
+    private String courseName;
+    private String traineeName;
 
     public Long getCourseId() {
         return courseId;
@@ -21,11 +22,19 @@ public class RequestCourseDTO extends AbstractDTO<RequestCourseDTO>{
         this.traineeId = traineeId;
     }
 
-    public String getComment() {
-        return comment;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getTraineeName() {
+        return traineeName;
+    }
+
+    public void setTraineeName(String traineeName) {
+        this.traineeName = traineeName;
     }
 }
