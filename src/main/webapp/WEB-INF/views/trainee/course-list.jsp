@@ -36,7 +36,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th><input type="checkbox" id="checkAll"></th>
+                                            <th><label for="checkAll"></label><input type="checkbox" id="checkAll"></th>
                                             <th>Course name</th>
                                             <th>Short description</th>
                                             <th>Course category</th>
@@ -45,7 +45,7 @@
                                         <tbody>
                                         <c:forEach var="item" items="${model.listResult}">
                                             <tr>
-                                                <td><input type="checkbox" id="checkbox_${item.id}" value="${item.id}">
+                                                <td><label for="checkbox_${item.id}"></label><input type="checkbox" id="checkbox_${item.id}" value="${item.id}">
                                                 <td>${item.courseName}</td>
                                                 <td>${item.shortDescription}</td>
                                                 <td>${item.courseCategoryNameCode}</td>
@@ -135,24 +135,12 @@
             data: JSON.stringify(data2),
             dataType: 'json',
             success: function (result) {
-                // thành công thì đứng yên trang edit và thông báo qua link
-                successPopup();
                 location.reload();
             },
             error: function (error) {
-                // Lỗi thì trả về trang user list
-                errorPopup();
                 location.reload();
             }
         });
-    }
-
-    function successPopup() {
-        alert("Successful!");
-    }
-
-    function errorPopup() {
-        alert("Error");
     }
 </script>
 </body>

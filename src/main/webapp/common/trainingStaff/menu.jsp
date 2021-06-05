@@ -29,6 +29,16 @@
                         Trainee list
                     </a>
 
+                    <a href="<c:url value='/training-staff/course/list?page=1&limit=5'/>">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Course list
+                    </a>
+
+                    <a href="<c:url value='/training-staff/coursecategory/list?page=1&limit=5'/>">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Course category list
+                    </a>
+
                     <a href="<c:url value='/training-staff/trainee/edit'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Add new trainee
@@ -37,21 +47,10 @@
                         <i class="menu-icon fa fa-caret-right"></i>
                         Add new course category
                     </a>
-                    <a href="<c:url value='/training-staff/coursecategory/list?page=1&limit=5'/>">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Course category list
-                    </a>
-                    <a href="<c:url value='/training-staff/count'/>">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Number of courses in category
-                    </a>
+
                     <a href="<c:url value='/training-staff/course/edit'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Add new course
-                    </a>
-                    <a href="<c:url value='/training-staff/course/list?page=1&limit=5'/>">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Course list
                     </a>
 
                     <a href="<c:url value='/training-staff/trainee/search'/>">
@@ -67,6 +66,16 @@
                     <a href="<c:url value='/training-staff/course/search'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Search Courses
+                    </a>
+
+                    <a href="<c:url value='/training-staff/count'/>">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Number of courses in category
+                    </a>
+
+                    <a href="<c:url value='/training-staff/request/course?page=1&limit=5'/>">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        View request courses from trainee
                     </a>
                     <b class="arrow"></b>
                 </li>
