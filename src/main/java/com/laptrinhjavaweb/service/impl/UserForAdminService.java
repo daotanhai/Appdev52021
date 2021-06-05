@@ -73,64 +73,68 @@ public class UserForAdminService implements IUserForAdminService {
         RoleEntity role = roleRepository.findOneByCode(userDTO.getRole());
 
         UserEntity userEntity = new UserEntity();
-        // Có id trả về từ DTO -> UPDATE user (id khác NULL)
-        if (userDTO.getId() != null) {
-            // get ra id của user cũ dựa trên hàm findOne(framework) từ RoleRepository
-            UserEntity oldUser = userRepository.findOne(userDTO.getId());
-            // get role cu cua no, truong hop no update role
-            RoleEntity oldRole = oldUser.getRoleEntity();
-            // update cho trainer
-            if (userDTO.getRole().equalsIgnoreCase("TRAINER")) {
-                // hiện tại là TRAINER nhưng cũ là TRAINING-STAFF
-                if (oldRole.getCode().equalsIgnoreCase("TRAINING-STAFF")) {
-                    // XÓA TRAINING STAFF ENTITY CŨ ĐI
-                    TrainingStaffEntity oldTrainingStaffEntity = trainingStaffRepository.findTrainingStaffEntityByUserName(oldUser.getUserName());
-                    trainingStaffRepository.delete(oldTrainingStaffEntity);
-                    // CHANGE QUA TRAINER ĐỂ SET MỚI 1 TRAINER ENTITY
-                    TrainerEntity trainerEntity = new TrainerEntity();
-                    trainerEntity.setUserName(userDTO.getUserName());
-                    trainerEntity.setRoleTrainer(role);
-                    trainerRepository.save(trainerEntity);
-                } else if (oldRole.getCode().equalsIgnoreCase("TRAINER")) {
-                    // Đầu tiên là lấy ra oldTrainer
-                    TrainerEntity oldTrainerEntity = trainerRepository.findTrainerEntityByUserName(oldUser.getUserName());
-                    oldTrainerEntity.setUserName(userDTO.getUserName()); // set userName moi
-                    trainerRepository.save(oldTrainerEntity); // save lai
+        // KHONG UPDATE ADMIN, NEU GUI VE USERNAME LA ADMIN THI KHONG SAVE GI
+        if (!userDTO.getUserName().equalsIgnoreCase("admin")){
+            // Có id trả về từ DTO -> UPDATE user (id khác NULL)
+            if (userDTO.getId() != null) {
+                // get ra id của user cũ dựa trên hàm findOne(framework) từ RoleRepository
+                UserEntity oldUser = userRepository.findOne(userDTO.getId());
+                // get role cu cua no, truong hop no update role
+                RoleEntity oldRole = oldUser.getRoleEntity();
+                // update cho trainer
+                if (userDTO.getRole().equalsIgnoreCase("TRAINER")) {
+                    // hiện tại là TRAINER nhưng cũ là TRAINING-STAFF
+                    if (oldRole.getCode().equalsIgnoreCase("TRAINING-STAFF")) {
+                        // XÓA TRAINING STAFF ENTITY CŨ ĐI
+                        TrainingStaffEntity oldTrainingStaffEntity = trainingStaffRepository.findTrainingStaffEntityByUserName(oldUser.getUserName());
+                        trainingStaffRepository.delete(oldTrainingStaffEntity);
+                        // CHANGE QUA TRAINER ĐỂ SET MỚI 1 TRAINER ENTITY
+                        TrainerEntity trainerEntity = new TrainerEntity();
+                        trainerEntity.setUserName(userDTO.getUserName());
+                        trainerEntity.setRoleTrainer(role);
+                        trainerRepository.save(trainerEntity);
+                    } else if (oldRole.getCode().equalsIgnoreCase("TRAINER")) {
+                        // Đầu tiên là lấy ra oldTrainer
+                        TrainerEntity oldTrainerEntity = trainerRepository.findTrainerEntityByUserName(oldUser.getUserName());
+                        oldTrainerEntity.setUserName(userDTO.getUserName()); // set userName moi
+                        trainerRepository.save(oldTrainerEntity); // save lai
+                    }
                 }
-            }
-            // update cho training staff
-            else if (userDTO.getRole().equalsIgnoreCase("TRAINING-STAFF")) {
-                // HIỆN TẠI LÀ TRAINING STAFF NHƯNG CŨ LÀ TRAINER
-                if (oldRole.getCode().equalsIgnoreCase("TRAINER")) {
-                    // XÓA TRAINER ENTITY CŨ
-                    TrainerEntity oldTrainerEntity = trainerRepository.findTrainerEntityByUserName(oldUser.getUserName());
-                    trainerRepository.delete(oldTrainerEntity);
-                    // QUA TRAINING STAFF ENTITY ĐỂ SET
-                    TrainingStaffEntity trainingStaffEntity = new TrainingStaffEntity();
-                    trainingStaffEntity.setUserName(userDTO.getUserName());
-                    trainingStaffEntity.setRoleTrainingStaff(role);
-                    trainingStaffRepository.save(trainingStaffEntity);
-                } else if (oldRole.getCode().equalsIgnoreCase("TRAINING-STAFF")) {
-                    TrainingStaffEntity oldTrainingStaffEntity = trainingStaffRepository.findTrainingStaffEntityByUserName(oldUser.getUserName());
-                    oldTrainingStaffEntity.setUserName(userDTO.getUserName());
-                    trainingStaffRepository.save(oldTrainingStaffEntity);
+                // update cho training staff
+                else if (userDTO.getRole().equalsIgnoreCase("TRAINING-STAFF")) {
+                    // HIỆN TẠI LÀ TRAINING STAFF NHƯNG CŨ LÀ TRAINER
+                    if (oldRole.getCode().equalsIgnoreCase("TRAINER")) {
+                        // XÓA TRAINER ENTITY CŨ
+                        TrainerEntity oldTrainerEntity = trainerRepository.findTrainerEntityByUserName(oldUser.getUserName());
+                        trainerRepository.delete(oldTrainerEntity);
+                        // QUA TRAINING STAFF ENTITY ĐỂ SET
+                        TrainingStaffEntity trainingStaffEntity = new TrainingStaffEntity();
+                        trainingStaffEntity.setUserName(userDTO.getUserName());
+                        trainingStaffEntity.setRoleTrainingStaff(role);
+                        trainingStaffRepository.save(trainingStaffEntity);
+                    } else if (oldRole.getCode().equalsIgnoreCase("TRAINING-STAFF")) {
+                        TrainingStaffEntity oldTrainingStaffEntity = trainingStaffRepository.findTrainingStaffEntityByUserName(oldUser.getUserName());
+                        oldTrainingStaffEntity.setUserName(userDTO.getUserName());
+                        trainingStaffRepository.save(oldTrainingStaffEntity);
+                    }
                 }
+                // Role là 1 field từ table khác. K có trong UserEntity nên phải thêm riêng
+                // update role của user cũ
+                oldUser.setRoleEntity(role);
+                userEntity = userForAdminConverter.toEntity(oldUser, userDTO);
             }
-            // Role là 1 field từ table khác. K có trong UserEntity nên phải thêm riêng
-            // update role của user cũ
-            oldUser.setRoleEntity(role);
-            userEntity = userForAdminConverter.toEntity(oldUser, userDTO);
-        }
-        // id = null se them moi user
-        if (userDTO.getId() == null) {
-            userEntity = userForAdminConverter.toEntity(userDTO);
-            userEntity.setRoleEntity(role);
+            // id = null se them moi user
+            if (userDTO.getId() == null) {
+                userEntity = userForAdminConverter.toEntity(userDTO);
+                userEntity.setRoleEntity(role);
+            }
+            return userForAdminConverter.toDTO(userRepository.save(userEntity));
         }
         // khi cập nhật hay thêm mới là làm với entity. Nhưng để đưa đối tượng ra view
         // va xử lý cần sang DTO
         // dùng convert và gọi hàm SAVE ( framework), truyền vào entity muốn save, ở đây
         // là user entity va trainer entity
-        return userForAdminConverter.toDTO(userRepository.save(userEntity));
+        return null;
     }
 
     @Override

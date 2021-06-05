@@ -24,12 +24,6 @@
                             <div class="table-btn-controls">
                                 <div class="pull-right tableTools-container">
                                     <div class="dt-buttons btn-overlap btn-group">
-                                        <%-- <c:url var="createNewURL" value="/quan-tri/bai-viet/chinh-sua"/>
-                                            <a flag="info" class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip" title='Thêm bài viết' href='${createNewURL}'>
-                                                        <span>
-                                                            <i class="fa fa-plus-circle bigger-110 purple"></i>
-                                                        </span>
-                                            </a> --%>
                                         <button id="btnDelete" type="button" onclick="warningBeforeDelete()"
                                                 class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
                                                 data-toggle="tooltip" title='Xóa users'>
@@ -47,7 +41,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th><input type="checkbox" id="checkAll"></th>
+                                            <th>Check-box</th>
                                             <th>UserName</th>
                                             <th>Password</th>
                                             <th>Role</th>
@@ -60,27 +54,35 @@
                                             <tr>
                                                 <!-- value = id cua user  -->
                                                 <!-- nó lặp, nên cần phân biệt id checkbox nào của user nào, do đó, dùng checkbox+id của user -->
-                                                <td><input type="checkbox" id="checkbox_${item.id}" value="${item.id}">
-                                                </td>
-                                                <td>${item.userName}</td>
-                                                <td>${item.password}</td>
-                                                <td>${item.role}</td>
-                                                <!-- Thêm Nút Chỉnh sửa/Cập nhật cho user -->
-                                                <td>
-                                                    <c:url var="userEditURL2" value="/quan-tri/user/edit">
-                                                        <c:param name="id" value="${item.id}"/>
-                                                    </c:url>
-                                                    <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                       title="Update this user" href='${userEditURL2}'><i
-                                                            class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <!-- <button id="btnDelete" type="button" onclick="warningBeforeDelete()"
-                                                    class="dt-button buttons-html5 btn btn-white btn-primary btn-bold" data-toggle="tooltip" title='Xóa bài viết'>
-                                                        <span>
-                                                            <i class="fa fa-trash-o bigger-110 pink"></i>
-                                                        </span>
-                                                    </button> -->
-                                                </td>
+
+                                                <c:if test="${item.userName !='admin'}">
+                                                    <td><input type="checkbox" id="checkbox_${item.id}" value="${item.id}"></td>
+                                                    <td>${item.userName}</td>
+                                                    <td>${item.password}</td>
+                                                    <td>${item.role}</td>
+                                                    <!-- Thêm Nút Chỉnh sửa/Cập nhật cho user -->
+                                                    <td>
+                                                            <%--If username khac admin thi moi hien thi nut edit--%>
+                                                        <c:url var="userEditURL2" value="/quan-tri/user/edit">
+                                                            <c:param name="id" value="${item.id}"/>
+                                                        </c:url>
+                                                        <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+                                                           title="Update this user" href='${userEditURL2}'><i
+                                                                class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                        </a>
+                                                    </td>
+                                                </c:if>
+
+                                                <c:if test="${item.userName =='admin'}">
+                                                    <td>Can't check here</td>
+                                                    <td>${item.userName}</td>
+                                                    <td>${item.password}</td>
+                                                    <td>${item.role}</td>
+                                                    <!-- Thêm Nút Chỉnh sửa/Cập nhật cho user -->
+                                                    <td>No actions</td>
+                                                </c:if>
+
+
                                             </tr>
                                         </c:forEach>
                                         </tbody>

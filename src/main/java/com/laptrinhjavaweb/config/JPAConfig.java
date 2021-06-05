@@ -80,7 +80,7 @@ public class JPAConfig {
         return dataSource;
     }*/
    // jdbc:postgresql://ec2-35-169-188-58.compute-1.amazonaws.com:5432/dbg6sua5v6iphl?password=2995810af148b172d7f2243f638580d9c53fc3691f458dd61bb74895f3fe5b76&sslmode=require&user=tnfopkhoxhchwv
-   /* @Bean
+/*    @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
