@@ -4,11 +4,10 @@ import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.MyUser;
 import com.laptrinhjavaweb.entity.RoleEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
-import com.laptrinhjavaweb.repository.UserRepository;
+import com.laptrinhjavaweb.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public long userId;
     // Authentication
     @Autowired
-    private UserRepository userRepository;
+    private IUserRepository IUserRepository;
 
     public long getUserId() {
         return userId;
@@ -41,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }*/
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findOneByUserNameAndStatus(username, SystemConstant.ACTIVE_STATUS);
+        UserEntity userEntity = IUserRepository.findOneByUserNameAndStatus(username, SystemConstant.ACTIVE_STATUS);
         if (userEntity != null) {
             setUserId(userEntity.getId());
         }

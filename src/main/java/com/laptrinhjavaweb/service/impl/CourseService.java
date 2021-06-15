@@ -23,33 +23,33 @@ public class CourseService implements ICourseService {
     CourseConverter courseConverter;
 
     @Autowired
-    CourseRepository courseRepository;
+    ICourseRepository ICourseRepository;
 
     @Autowired
-    CourseCategoryRepository courseCategoryRepository;
+    ICourseCategoryRepository ICourseCategoryRepository;
 
     @Autowired
     CourseCategoryConverter courseCategoryConverter;
 
     @Autowired
-    TraineeCourseRepository traineeCourseRepository;
+    ITraineeCourseRepository ITraineeCourseRepository;
 
     @Autowired
-    TraineeRepository traineeRepository;
+    ITraineeRepository ITraineeRepository;
 
     @Autowired
-    UserRepository userRepository;
+    IUserRepository IUserRepository;
 
     @Autowired
-    TrainerRepository trainerRepository;
+    ITrainerRepository ITrainerRepository;
 
     @Autowired
-    TrainerCourseRepository trainerCourseRepository;
+    ITrainerCourseRepository ITrainerCourseRepository;
 
     @Override
     public List<CourseDTO> findAll(Pageable pageable) {
         List<CourseDTO> models = new ArrayList<CourseDTO>();
-        List<CourseEntity> entities = courseRepository.findAll(pageable).getContent();
+        List<CourseEntity> entities = ICourseRepository.findAll(pageable).getContent();
         for (CourseEntity items : entities) {
             CourseDTO courseDTO = courseConverter.toDTO(items);
             models.add(courseDTO);
@@ -60,7 +60,7 @@ public class CourseService implements ICourseService {
     @Override
     public List<CourseDTO> findAllCourse() {
         List<CourseDTO> models = new ArrayList<>();
-        List<CourseEntity> entities = courseRepository.findAll();
+        List<CourseEntity> entities = ICourseRepository.findAll();
         for (CourseEntity items : entities) {
             CourseDTO courseDTO = courseConverter.toDTO(items);
             models.add(courseDTO);
@@ -70,21 +70,21 @@ public class CourseService implements ICourseService {
 
     @Override
     public int getTotalCourse() {
-        return (int) courseRepository.count();
+        return (int) ICourseRepository.count();
     }
 
     @Override
     public CourseDTO findById(long id) {
-        return courseConverter.toDTO(courseRepository.findOne(id));
+        return courseConverter.toDTO(ICourseRepository.findOne(id));
     }
 
     @Override
     public CourseDTO save(CourseDTO courseDTO) {
-        CourseCategoryEntity category = courseCategoryRepository.findByCourseCategoryNameCode(courseDTO.getCourseCategoryNameCode());
+        CourseCategoryEntity category = ICourseCategoryRepository.findByCourseCategoryNameCode(courseDTO.getCourseCategoryNameCode());
         CourseEntity courseEntity = new CourseEntity();
         // UPDATE
         if (courseDTO.getId() != null) {
-            CourseEntity oldCourse = courseRepository.findOne(courseDTO.getId());
+            CourseEntity oldCourse = ICourseRepository.findOne(courseDTO.getId());
             // UPDATE THỂ LOẠI
             oldCourse.setCourseCategory(category);
             // UPDATE Thể loại xong update các
@@ -96,7 +96,7 @@ public class CourseService implements ICourseService {
             courseEntity = courseConverter.toEntity(courseDTO);
             courseEntity.setCourseCategory(category);
         }
-        return courseConverter.toDTO(courseRepository.save(courseEntity));
+        return courseConverter.toDTO(ICourseRepository.save(courseEntity));
 
     }
 
@@ -104,14 +104,14 @@ public class CourseService implements ICourseService {
     @Transactional
     public void delete(long[] ids) {
         for (long id : ids) {
-            courseRepository.delete(id);
+            ICourseRepository.delete(id);
         }
     }
 
     @Override
     public Map<String, String> findAll() {
         Map<String, String> result = new HashMap<String, String>();
-        List<CourseEntity> entities = courseRepository.findAll();
+        List<CourseEntity> entities = ICourseRepository.findAll();
         for (CourseEntity item : entities) {
             result.put(item.getCourseName(), item.getCourseName());
         }
@@ -135,19 +135,19 @@ public class CourseService implements ICourseService {
         // TH1: User gui ve 1 trong 3 fields
         if (count == 1) {
             if (!courseDTO.getCourseName().equalsIgnoreCase("")) {
-                List<CourseEntity> courseEntities = courseRepository.findCourseEntitiesByCourseName(courseDTO.getCourseName());
+                List<CourseEntity> courseEntities = ICourseRepository.findCourseEntitiesByCourseName(courseDTO.getCourseName());
                 for (CourseEntity item : courseEntities) {
                     courseDTO1 = courseConverter.toDTO(item);
                     models.add(courseDTO1);
                 }
             } else if (!courseDTO.getCourseCategoryNameCode().equalsIgnoreCase("")) {
-                List<CourseEntity> courseEntities = courseRepository.findCourseEntitiesByCourseCategory_CourseCategoryNameCode(courseDTO.getCourseCategoryNameCode());
+                List<CourseEntity> courseEntities = ICourseRepository.findCourseEntitiesByCourseCategory_CourseCategoryNameCode(courseDTO.getCourseCategoryNameCode());
                 for (CourseEntity item : courseEntities) {
                     courseDTO1 = courseConverter.toDTO(item);
                     models.add(courseDTO1);
                 }
             } else if (!courseDTO.getShortDescription().equalsIgnoreCase("")) {
-                List<CourseEntity> courseEntities = courseRepository.findCourseEntitiesByShortDescription(courseDTO.getShortDescription());
+                List<CourseEntity> courseEntities = ICourseRepository.findCourseEntitiesByShortDescription(courseDTO.getShortDescription());
                 for (CourseEntity item : courseEntities) {
                     courseDTO1 = courseConverter.toDTO(item);
                     models.add(courseDTO1);
@@ -160,21 +160,21 @@ public class CourseService implements ICourseService {
         // 3: course name + description
         if (count == 2) {
             if (!courseDTO.getCourseName().equalsIgnoreCase("") && !courseDTO.getCourseCategoryNameCode().equalsIgnoreCase("")) {
-                List<CourseEntity> courseEntities = courseRepository.findCourseEntitiesByCourseNameAndCourseCategory_CourseCategoryNameCode(courseDTO.getCourseName(), courseDTO.getCourseCategoryNameCode());
+                List<CourseEntity> courseEntities = ICourseRepository.findCourseEntitiesByCourseNameAndCourseCategory_CourseCategoryNameCode(courseDTO.getCourseName(), courseDTO.getCourseCategoryNameCode());
                 for (CourseEntity item : courseEntities) {
                     courseDTO1 = courseConverter.toDTO(item);
                     models.add(courseDTO1);
                 }
             }
             if (!courseDTO.getCourseCategoryNameCode().equalsIgnoreCase("") && !courseDTO.getShortDescription().equalsIgnoreCase("")) {
-                List<CourseEntity> courseEntities = courseRepository.findCourseEntitiesByCourseCategory_CourseCategoryNameCodeAndShortDescription(courseDTO.getCourseCategoryNameCode(), courseDTO.getShortDescription());
+                List<CourseEntity> courseEntities = ICourseRepository.findCourseEntitiesByCourseCategory_CourseCategoryNameCodeAndShortDescription(courseDTO.getCourseCategoryNameCode(), courseDTO.getShortDescription());
                 for (CourseEntity item : courseEntities) {
                     courseDTO1 = courseConverter.toDTO(item);
                     models.add(courseDTO1);
                 }
             }
             if (!courseDTO.getCourseName().equalsIgnoreCase("") && !courseDTO.getShortDescription().equalsIgnoreCase("")) {
-                List<CourseEntity> courseEntities = courseRepository.findCourseEntitiesByCourseNameAndShortDescription(courseDTO.getCourseName(), courseDTO.getShortDescription());
+                List<CourseEntity> courseEntities = ICourseRepository.findCourseEntitiesByCourseNameAndShortDescription(courseDTO.getCourseName(), courseDTO.getShortDescription());
                 for (CourseEntity item : courseEntities) {
                     courseDTO1 = courseConverter.toDTO(item);
                     models.add(courseDTO1);
@@ -187,12 +187,12 @@ public class CourseService implements ICourseService {
     @Override
     public List<CourseDTO> findCoursesByTraineeId(long id) {
         // long id lúc này là id của user, mình phải tìm ra được trainee đó là ai dựa vào userName
-        UserEntity userEntity = userRepository.findOne(id);
-        TraineeEntity traineeEntity = traineeRepository.findTraineeEntityByUserName(userEntity.getUserName());
+        UserEntity userEntity = IUserRepository.findOne(id);
+        TraineeEntity traineeEntity = ITraineeRepository.findTraineeEntityByUserName(userEntity.getUserName());
         long traineeId = traineeEntity.getId();
         List<Long> courseIdList = new ArrayList<>();
         List<TraineeCourseEntity> traineeCourseEntities = new ArrayList<>();
-        traineeCourseEntities = traineeCourseRepository.findTraineeCourseEntitiesByTraineeEntity_Id(traineeId);
+        traineeCourseEntities = ITraineeCourseRepository.findTraineeCourseEntitiesByTraineeEntity_Id(traineeId);
         // get ra het cac id cua course based on trainee id
         for (TraineeCourseEntity item : traineeCourseEntities) {
             courseIdList.add(item.getCourseEntityForTrainee().getId());
@@ -201,7 +201,7 @@ public class CourseService implements ICourseService {
         List<CourseDTO> courseDTOList = new ArrayList<>();
         CourseEntity courseEntity = new CourseEntity();
         for (Long courseId : courseIdList) {
-            courseEntity = courseRepository.findOne(courseId);
+            courseEntity = ICourseRepository.findOne(courseId);
             courseDTOList.add(courseConverter.toDTO(courseEntity));
         }
         return courseDTOList;
@@ -209,13 +209,13 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDTO> findCoursesByTrainerId(long id) {
-        UserEntity userEntity = userRepository.findOne(id);
-        TrainerEntity trainerEntity = trainerRepository.findTrainerEntityByUserName(userEntity.getUserName());
+        UserEntity userEntity = IUserRepository.findOne(id);
+        TrainerEntity trainerEntity = ITrainerRepository.findTrainerEntityByUserName(userEntity.getUserName());
         long trainerId = trainerEntity.getId();
         List<Long> courseIdList = new ArrayList<>();
         TrainerCourseEntity trainerCourseEntity = new TrainerCourseEntity();
         List<TrainerCourseEntity> trainerCourseEntities = new ArrayList<>();
-        trainerCourseEntities = trainerCourseRepository.findTrainerCourseEntitiesByTrainerEntity_Id(trainerId);
+        trainerCourseEntities = ITrainerCourseRepository.findTrainerCourseEntitiesByTrainerEntity_Id(trainerId);
         for (TrainerCourseEntity item : trainerCourseEntities){
             courseIdList.add(item.getCourseEntityForTrainer().getId());
         }
@@ -223,7 +223,7 @@ public class CourseService implements ICourseService {
         List<CourseDTO> courseDTOList = new ArrayList<>();
         CourseEntity courseEntity = new CourseEntity();
         for (Long courseId : courseIdList) {
-            courseEntity = courseRepository.findOne(courseId);
+            courseEntity = ICourseRepository.findOne(courseId);
             courseDTOList.add(courseConverter.toDTO(courseEntity));
         }
         return courseDTOList;

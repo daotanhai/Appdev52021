@@ -11,7 +11,7 @@ import java.util.Date;
 
 @MappedSuperclass
 // MappedSuperClass chi biet class nay la cha. Nhung thang kia la con
-
+// EntityListeners là để dùng đc JpaAuditing @CreatedDate...
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 

@@ -1,26 +1,19 @@
 package com.laptrinhjavaweb.initialDatabase;
 
 import com.laptrinhjavaweb.entity.RoleEntity;
-import com.laptrinhjavaweb.entity.TraineeEntity;
-import com.laptrinhjavaweb.entity.TrainerEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
-import com.laptrinhjavaweb.repository.RoleRepository;
-import com.laptrinhjavaweb.repository.UserRepository;
+import com.laptrinhjavaweb.repository.IRoleRepository;
+import com.laptrinhjavaweb.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.management.relation.Role;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ForkJoinPool;
 
 @Service
 public class InitialDatabase {
     @Autowired
-    UserRepository userRepository;
+    IUserRepository IUserRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    IRoleRepository IRoleRepository;
 
     // Create role trainer vs training staff vs trainee
     public void createRole(){
@@ -35,16 +28,16 @@ public class InitialDatabase {
 
         trainee.setCode("TRAINEE");
         trainee.setName("trainee");
-        roleRepository.save(trainingStaff);
-        roleRepository.save(trainer);
-        roleRepository.save(trainee);
+        IRoleRepository.save(trainingStaff);
+        IRoleRepository.save(trainer);
+        IRoleRepository.save(trainee);
     }
     public void createUser(){
         UserEntity userEntity = new UserEntity();
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setCode("ADMIN");
         roleEntity.setName("quan tri");
-        roleRepository.save(roleEntity);
+        IRoleRepository.save(roleEntity);
 
         userEntity.setUserName("admin");
         userEntity.setPassword("$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG");
@@ -52,7 +45,7 @@ public class InitialDatabase {
         userEntity.setStatus(1);
         userEntity.setRoleEntity(roleEntity);
         createRole();
-        userRepository.save(userEntity);
+        IUserRepository.save(userEntity);
     }
 
 }

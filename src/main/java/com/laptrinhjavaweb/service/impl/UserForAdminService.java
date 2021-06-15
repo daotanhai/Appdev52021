@@ -8,10 +8,10 @@ import com.laptrinhjavaweb.entity.RoleEntity;
 import com.laptrinhjavaweb.entity.TrainerEntity;
 import com.laptrinhjavaweb.entity.TrainingStaffEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
-import com.laptrinhjavaweb.repository.RoleRepository;
-import com.laptrinhjavaweb.repository.TrainerRepository;
-import com.laptrinhjavaweb.repository.TrainingStaffRepository;
-import com.laptrinhjavaweb.repository.UserRepository;
+import com.laptrinhjavaweb.repository.IRoleRepository;
+import com.laptrinhjavaweb.repository.ITrainerRepository;
+import com.laptrinhjavaweb.repository.ITrainingStaffRepository;
+import com.laptrinhjavaweb.repository.IUserRepository;
 import com.laptrinhjavaweb.service.IUserForAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -27,13 +27,13 @@ import java.util.List;
 public class UserForAdminService implements IUserForAdminService {
 
     @Autowired
-    private UserRepository userRepository;
+    private IUserRepository IUserRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private IRoleRepository IRoleRepository;
 
     @Autowired
-    private TrainerRepository trainerRepository;
+    private ITrainerRepository ITrainerRepository;
 
     @Autowired
     private UserForAdminConverter userForAdminConverter;
@@ -45,7 +45,7 @@ public class UserForAdminService implements IUserForAdminService {
     private TrainingStaffConverter trainingStaffConverter;
 
     @Autowired
-    private TrainingStaffRepository trainingStaffRepository;
+    private ITrainingStaffRepository ITrainingStaffRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -55,7 +55,7 @@ public class UserForAdminService implements IUserForAdminService {
         List<UserDTO> models = new ArrayList<UserDTO>();
         // SELECT * thông tin của table new dựa theo pageable
         // nếu k dựa theo pageable nó sẽ lấy hết danh sách và hiển thị ra ngoài
-        List<UserEntity> entities = userRepository.findAll(pageable).getContent();
+        List<UserEntity> entities = IUserRepository.findAll(pageable).getContent();
         // do data tu userEntity(item) qua UserDTO(models)
         for (UserEntity item : entities) {
             UserDTO userDTO = userForAdminConverter.toDTO(item);
@@ -70,7 +70,7 @@ public class UserForAdminService implements IUserForAdminService {
     public UserDTO save(UserDTO userDTO) {
         // Lấy ra đối tượng RoleEntity cần phải update dựa trên role(string) gửi về
         // từ client trong DTO
-        RoleEntity role = roleRepository.findOneByCode(userDTO.getRole());
+        RoleEntity role = IRoleRepository.findOneByCode(userDTO.getRole());
 
         UserEntity userEntity = new UserEntity();
         // KHONG UPDATE ADMIN, NEU GUI VE USERNAME LA ADMIN THI KHONG SAVE GI
@@ -78,7 +78,7 @@ public class UserForAdminService implements IUserForAdminService {
             // Có id trả về từ DTO -> UPDATE user (id khác NULL)
             if (userDTO.getId() != null) {
                 // get ra id của user cũ dựa trên hàm findOne(framework) từ RoleRepository
-                UserEntity oldUser = userRepository.findOne(userDTO.getId());
+                UserEntity oldUser = IUserRepository.findOne(userDTO.getId());
                 // get role cu cua no, truong hop no update role
                 RoleEntity oldRole = oldUser.getRoleEntity();
                 // update cho trainer
@@ -86,18 +86,18 @@ public class UserForAdminService implements IUserForAdminService {
                     // hiện tại là TRAINER nhưng cũ là TRAINING-STAFF
                     if (oldRole.getCode().equalsIgnoreCase("TRAINING-STAFF")) {
                         // XÓA TRAINING STAFF ENTITY CŨ ĐI
-                        TrainingStaffEntity oldTrainingStaffEntity = trainingStaffRepository.findTrainingStaffEntityByUserName(oldUser.getUserName());
-                        trainingStaffRepository.delete(oldTrainingStaffEntity);
+                        TrainingStaffEntity oldTrainingStaffEntity = ITrainingStaffRepository.findTrainingStaffEntityByUserName(oldUser.getUserName());
+                        ITrainingStaffRepository.delete(oldTrainingStaffEntity);
                         // CHANGE QUA TRAINER ĐỂ SET MỚI 1 TRAINER ENTITY
                         TrainerEntity trainerEntity = new TrainerEntity();
                         trainerEntity.setUserName(userDTO.getUserName());
                         trainerEntity.setRoleTrainer(role);
-                        trainerRepository.save(trainerEntity);
+                        ITrainerRepository.save(trainerEntity);
                     } else if (oldRole.getCode().equalsIgnoreCase("TRAINER")) {
                         // Đầu tiên là lấy ra oldTrainer
-                        TrainerEntity oldTrainerEntity = trainerRepository.findTrainerEntityByUserName(oldUser.getUserName());
+                        TrainerEntity oldTrainerEntity = ITrainerRepository.findTrainerEntityByUserName(oldUser.getUserName());
                         oldTrainerEntity.setUserName(userDTO.getUserName()); // set userName moi
-                        trainerRepository.save(oldTrainerEntity); // save lai
+                        ITrainerRepository.save(oldTrainerEntity); // save lai
                     }
                 }
                 // update cho training staff
@@ -105,17 +105,17 @@ public class UserForAdminService implements IUserForAdminService {
                     // HIỆN TẠI LÀ TRAINING STAFF NHƯNG CŨ LÀ TRAINER
                     if (oldRole.getCode().equalsIgnoreCase("TRAINER")) {
                         // XÓA TRAINER ENTITY CŨ
-                        TrainerEntity oldTrainerEntity = trainerRepository.findTrainerEntityByUserName(oldUser.getUserName());
-                        trainerRepository.delete(oldTrainerEntity);
+                        TrainerEntity oldTrainerEntity = ITrainerRepository.findTrainerEntityByUserName(oldUser.getUserName());
+                        ITrainerRepository.delete(oldTrainerEntity);
                         // QUA TRAINING STAFF ENTITY ĐỂ SET
                         TrainingStaffEntity trainingStaffEntity = new TrainingStaffEntity();
                         trainingStaffEntity.setUserName(userDTO.getUserName());
                         trainingStaffEntity.setRoleTrainingStaff(role);
-                        trainingStaffRepository.save(trainingStaffEntity);
+                        ITrainingStaffRepository.save(trainingStaffEntity);
                     } else if (oldRole.getCode().equalsIgnoreCase("TRAINING-STAFF")) {
-                        TrainingStaffEntity oldTrainingStaffEntity = trainingStaffRepository.findTrainingStaffEntityByUserName(oldUser.getUserName());
+                        TrainingStaffEntity oldTrainingStaffEntity = ITrainingStaffRepository.findTrainingStaffEntityByUserName(oldUser.getUserName());
                         oldTrainingStaffEntity.setUserName(userDTO.getUserName());
-                        trainingStaffRepository.save(oldTrainingStaffEntity);
+                        ITrainingStaffRepository.save(oldTrainingStaffEntity);
                     }
                 }
                 // Role là 1 field từ table khác. K có trong UserEntity nên phải thêm riêng
@@ -128,7 +128,7 @@ public class UserForAdminService implements IUserForAdminService {
                 userEntity = userForAdminConverter.toEntity(userDTO);
                 userEntity.setRoleEntity(role);
             }
-            return userForAdminConverter.toDTO(userRepository.save(userEntity));
+            return userForAdminConverter.toDTO(IUserRepository.save(userEntity));
         }
         // khi cập nhật hay thêm mới là làm với entity. Nhưng để đưa đối tượng ra view
         // va xử lý cần sang DTO
@@ -140,7 +140,7 @@ public class UserForAdminService implements IUserForAdminService {
     @Override
     public void saveTrainerRoleAndUserName(UserDTO userDTO) {
         TrainerEntity trainerEntity = new TrainerEntity();
-        RoleEntity role = roleRepository.findOneByCode(userDTO.getRole());
+        RoleEntity role = IRoleRepository.findOneByCode(userDTO.getRole());
         if (userDTO.getId() == null) {
             trainerEntity.setUserName(userDTO.getUserName());
             trainerEntity.setRoleTrainer(role);
@@ -151,18 +151,18 @@ public class UserForAdminService implements IUserForAdminService {
         // dùng convert và gọi hàm SAVE ( framework), truyền vào entity muốn save, ở đây
         // trainer entity
         // cần return vì sau này sẽ để hiển thị lại các fields đã lưu
-        trainerConverter.toDTO(trainerRepository.save(trainerEntity));
+        trainerConverter.toDTO(ITrainerRepository.save(trainerEntity));
     }
 
     @Override
     public UserDTO findById(long id) {
-        UserEntity userEntity = userRepository.findOne(id);
+        UserEntity userEntity = IUserRepository.findOne(id);
         return userForAdminConverter.toDTO(userEntity);
     }
 
     @Override
     public int getTotalItem() {
-        return (int) userRepository.count();
+        return (int) IUserRepository.count();
     }
 
 
@@ -173,7 +173,7 @@ public class UserForAdminService implements IUserForAdminService {
         // Tìm ra đối tượng role(bao gồm các fields trong table mySQL)
         // dựa theo code(ADMIN, TRAINING-STAFF, TRAINER) gửi về từ DTO
         // trùng cái nào thì get ra đối tượng đó, chứa các thông tin như trong field
-        RoleEntity role = roleRepository.findOneByCode(userDTO.getRole());
+        RoleEntity role = IRoleRepository.findOneByCode(userDTO.getRole());
         // id trong userDTO = rỗng nghĩa là đang thêm mới. Otherwise, update
         if (userDTO.getId() == null) {
             trainingStaffEntity.setUserName(userDTO.getUserName());
@@ -185,7 +185,7 @@ public class UserForAdminService implements IUserForAdminService {
         // va xử lý cần sang DTO
         // dùng convert và gọi hàm SAVE ( framework), truyền vào entity muốn save, ở đây
         // trainer entity
-        trainingStaffConverter.toDTO(trainingStaffRepository.save(trainingStaffEntity));
+        trainingStaffConverter.toDTO(ITrainingStaffRepository.save(trainingStaffEntity));
     }
 
     // Xoa user
@@ -196,19 +196,19 @@ public class UserForAdminService implements IUserForAdminService {
         for (long id : ids) {
             String userName;
             // tìm được role code + username trong bảng user
-            UserEntity userEntity = userRepository.findOne(id);
+            UserEntity userEntity = IUserRepository.findOne(id);
             // get username by id trong bang user
             userName = userEntity.getUserName();
             if (userEntity.getRoleEntity().getCode().equalsIgnoreCase("TRAINER")) {
                 // get trainerEntity dua theo userName
-                TrainerEntity trainerEntity = trainerRepository.findTrainerEntityByUserName(userName);
-                trainerRepository.delete(trainerEntity);
+                TrainerEntity trainerEntity = ITrainerRepository.findTrainerEntityByUserName(userName);
+                ITrainerRepository.delete(trainerEntity);
             } else if (userEntity.getRoleEntity().getCode().equalsIgnoreCase("TRAINING-STAFF")) {
-                TrainingStaffEntity trainingStaffEntity = trainingStaffRepository.findTrainingStaffEntityByUserName(userName);
-                trainingStaffRepository.delete(trainingStaffEntity);
+                TrainingStaffEntity trainingStaffEntity = ITrainingStaffRepository.findTrainingStaffEntityByUserName(userName);
+                ITrainingStaffRepository.delete(trainingStaffEntity);
             }
             if (!userEntity.getRoleEntity().getCode().equalsIgnoreCase("ADMIN")) {
-                userRepository.delete(id);
+                IUserRepository.delete(id);
             }
 			/*// delete từ framework support cho
 			userRepository.delete(id);*/

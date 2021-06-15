@@ -3,7 +3,7 @@ package com.laptrinhjavaweb.service.impl;
 import com.laptrinhjavaweb.converter.TraineeConverter;
 import com.laptrinhjavaweb.dto.TraineeDTO;
 import com.laptrinhjavaweb.entity.TraineeEntity;
-import com.laptrinhjavaweb.repository.TraineeRepository;
+import com.laptrinhjavaweb.repository.ITraineeRepository;
 import com.laptrinhjavaweb.service.ISearchTraineeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class SearchTraineeService implements ISearchTraineeService {
     @Autowired
-    TraineeRepository traineeRepository;
+    ITraineeRepository ITraineeRepository;
 
     @Autowired
     TraineeConverter traineeConverter;
@@ -60,19 +60,19 @@ public class SearchTraineeService implements ISearchTraineeService {
         }
         if (count == 1) {
             if (!TraineeDTO.getToeicScore().equalsIgnoreCase("")) {
-                List<TraineeEntity> traineeEntities = traineeRepository.findTraineeEntityByToeicScore(TraineeDTO.getToeicScore());
+                List<TraineeEntity> traineeEntities = ITraineeRepository.findTraineeEntityByToeicScore(TraineeDTO.getToeicScore());
                 for (TraineeEntity item : traineeEntities) {
                     traineeDTO = traineeConverter.toDTO(item);
                     models.add(traineeDTO);
                 }
             }
             if (!TraineeDTO.getUserName().equalsIgnoreCase("")) {
-                TraineeEntity traineeEntity = traineeRepository.findTraineeEntityByUserName(TraineeDTO.getUserName());
+                TraineeEntity traineeEntity = ITraineeRepository.findTraineeEntityByUserName(TraineeDTO.getUserName());
                 traineeDTO = traineeConverter.toDTO(traineeEntity);
                 models.add(traineeDTO);
             }
             if (!TraineeDTO.getMainProgrammingLangugage().equalsIgnoreCase("")) {
-                List<TraineeEntity> traineeEntities = traineeRepository.findTraineeEntityByMainProgrammingLangugage(TraineeDTO.getMainProgrammingLangugage());
+                List<TraineeEntity> traineeEntities = ITraineeRepository.findTraineeEntityByMainProgrammingLangugage(TraineeDTO.getMainProgrammingLangugage());
                 for (TraineeEntity item : traineeEntities) {
                     traineeDTO = traineeConverter.toDTO(item);
                     models.add(traineeDTO);
@@ -80,7 +80,7 @@ public class SearchTraineeService implements ISearchTraineeService {
             }
         } else if (count == 2) {
             if (!results.get(1).equalsIgnoreCase("") && !results.get(2).equalsIgnoreCase("")) {
-                List<TraineeEntity> traineeEntities = traineeRepository.findTraineeEntitiesByToeicScoreAndMainProgrammingLangugage(TraineeDTO.getToeicScore(), TraineeDTO.getMainProgrammingLangugage());
+                List<TraineeEntity> traineeEntities = ITraineeRepository.findTraineeEntitiesByToeicScoreAndMainProgrammingLangugage(TraineeDTO.getToeicScore(), TraineeDTO.getMainProgrammingLangugage());
                 TraineeDTO traineeDTO1 = new TraineeDTO();
                 for (TraineeEntity item : traineeEntities) {
                     traineeDTO1 = traineeConverter.toDTO(item);

@@ -24,25 +24,25 @@ import java.util.Map;
 @Service
 public class TrainerService implements ITrainerService {
     @Autowired
-    TrainerRepository trainerRepository;
+    ITrainerRepository ITrainerRepository;
 
     @Autowired
     TrainerConverter trainerConverter;
 
     @Autowired
-    CourseRepository courseRepository;
+    ICourseRepository ICourseRepository;
 
     @Autowired
-    TrainerCourseRepository trainerCourseRepository;
+    ITrainerCourseRepository ITrainerCourseRepository;
 
     @Autowired
     TrainerCourseConverter trainerCourseConverter;
 
     @Autowired
-    RoleRepository roleRepository;
+    IRoleRepository IRoleRepository;
 
     @Autowired
-    UserRepository userRepository;
+    IUserRepository IUserRepository;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -50,7 +50,7 @@ public class TrainerService implements ITrainerService {
     @Override
     public List<TrainerDTO> findAll(Pageable pageable) {
         List<TrainerDTO> models = new ArrayList<TrainerDTO>();
-        List<TrainerEntity> entities = trainerRepository.findAll(pageable).getContent();
+        List<TrainerEntity> entities = ITrainerRepository.findAll(pageable).getContent();
         for (TrainerEntity item : entities) {
             TrainerDTO trainerDTO = trainerConverter.toDTO(item);
             models.add(trainerDTO);
@@ -60,7 +60,7 @@ public class TrainerService implements ITrainerService {
 
     @Override
     public TrainerDTO findById(Long id) {
-        return trainerConverter.toDTO(trainerRepository.findOne(id));
+        return trainerConverter.toDTO(ITrainerRepository.findOne(id));
     }
 
     @Override
@@ -68,14 +68,14 @@ public class TrainerService implements ITrainerService {
     public TrainerDTO saveTrainerForTrainer(TrainerDTO trainerDTO) {
         TrainerEntity trainerEntity = new TrainerEntity();
         UserEntity userEntity = new UserEntity();
-        RoleEntity role = roleRepository.findOneByCode(trainerDTO.getRoleCode());
+        RoleEntity role = IRoleRepository.findOneByCode(trainerDTO.getRoleCode());
         if (trainerDTO.getId() != null) {
-            TrainerEntity oldTrainer = trainerRepository.findOne(trainerDTO.getId());
-            UserEntity oldUser = userRepository.findUserEntityByUserName(oldTrainer.getUserName());
+            TrainerEntity oldTrainer = ITrainerRepository.findOne(trainerDTO.getId());
+            UserEntity oldUser = IUserRepository.findUserEntityByUserName(oldTrainer.getUserName());
             // update trong bang user
             oldUser.setPassword(bCryptPasswordEncoder.encode(trainerDTO.getPassWord()));
             oldUser.setFullName(trainerDTO.getName());
-            userRepository.save(oldUser);
+            IUserRepository.save(oldUser);
             // update trong bang trainer
             oldTrainer.setRoleTrainer(role);
             oldTrainer.setPassword(oldUser.getPassword());
@@ -89,24 +89,24 @@ public class TrainerService implements ITrainerService {
             userEntity.setFullName(trainerDTO.getName());
             userEntity.setStatus(trainerDTO.getStatus());
 
-            userRepository.save(userEntity);
+            IUserRepository.save(userEntity);
             trainerEntity.setRoleTrainer(role);
             trainerEntity.setPassword(userEntity.getPassword());
         }
-        return trainerConverter.toDTO(trainerRepository.save(trainerEntity));
+        return trainerConverter.toDTO(ITrainerRepository.save(trainerEntity));
     }
 
     @Override
     public TrainerForTrainingStaffDTO saveTrainerForTrainingStaff(TrainerForTrainingStaffDTO trainerForTrainingStaffDTO) {
         TrainerEntity oldTrainer = new TrainerEntity();
-        oldTrainer = trainerRepository.findOne(trainerForTrainingStaffDTO.getId());
+        oldTrainer = ITrainerRepository.findOne(trainerForTrainingStaffDTO.getId());
         oldTrainer.setName(trainerForTrainingStaffDTO.getName());
         oldTrainer.setWorkingPlace(trainerForTrainingStaffDTO.getWorkingPlace());
         oldTrainer.setEducation(trainerForTrainingStaffDTO.getEducation());
         oldTrainer.setTelephone(trainerForTrainingStaffDTO.getTelephone());
         oldTrainer.setEmail(trainerForTrainingStaffDTO.getEmail());
         oldTrainer.setExternalOrInternal(trainerForTrainingStaffDTO.getExternalOrInternal());
-        trainerRepository.save(oldTrainer);
+        ITrainerRepository.save(oldTrainer);
         TrainerForTrainingStaffDTO trainerTS = new TrainerForTrainingStaffDTO();
         trainerTS.setId(oldTrainer.getId());
         trainerTS.setName(oldTrainer.getName());
@@ -120,13 +120,13 @@ public class TrainerService implements ITrainerService {
 
     @Override
     public int getTotalTrainers() {
-        return (int) trainerRepository.count();
+        return (int) ITrainerRepository.count();
     }
 
     @Override
     public Map<String, String> findAll() {
         Map<String, String> result = new HashMap<String, String>();
-        List<TrainerEntity> entities = trainerRepository.findAll();
+        List<TrainerEntity> entities = ITrainerRepository.findAll();
         for (TrainerEntity item : entities) {
             result.put(item.getName(), item.getName());
         }
@@ -136,7 +136,7 @@ public class TrainerService implements ITrainerService {
     @Override
     public void deleteTrainer(long[] ids) {
         for (long id : ids) {
-            trainerRepository.delete(id);
+            ITrainerRepository.delete(id);
         }
     }
 
@@ -145,18 +145,18 @@ public class TrainerService implements ITrainerService {
         long trainerId = ids[0];
         for (int i = 1; i < ids.length; i++) {
             TrainerCourseEntity trainerCourseEntity = new TrainerCourseEntity();
-            TrainerEntity trainerEntity = trainerRepository.findOne(trainerId);
+            TrainerEntity trainerEntity = ITrainerRepository.findOne(trainerId);
             long courseIdOld = ids[i];
-            CourseEntity courseEntity = courseRepository.findOne(courseIdOld);
+            CourseEntity courseEntity = ICourseRepository.findOne(courseIdOld);
             trainerCourseEntity.setTrainerEntity(trainerEntity);
             trainerCourseEntity.setCourseEntityForTrainer(courseEntity);
-            trainerCourseRepository.save(trainerCourseEntity);
+            ITrainerCourseRepository.save(trainerCourseEntity);
         }
     }
 
     @Override
     public List<TrainerCourseDTO> findCourseOnTrainerId(long id) {
-        List<TrainerCourseEntity> trainerCourseEntities = trainerCourseRepository.findTrainerCourseEntitiesByTrainerEntity_Id(id);
+        List<TrainerCourseEntity> trainerCourseEntities = ITrainerCourseRepository.findTrainerCourseEntitiesByTrainerEntity_Id(id);
         TrainerCourseDTO trainerCourseDTO;
         List<TrainerCourseDTO> models = new ArrayList<>();
         for (TrainerCourseEntity item : trainerCourseEntities) {
@@ -169,8 +169,8 @@ public class TrainerService implements ITrainerService {
     @Override
     public void deleteTrainerCourse(long[] ids) {
         for (long id : ids) {
-            TrainerCourseEntity trainerCourseEntity = trainerCourseRepository.findOne(id);
-            trainerCourseRepository.delete(trainerCourseEntity);
+            TrainerCourseEntity trainerCourseEntity = ITrainerCourseRepository.findOne(id);
+            ITrainerCourseRepository.delete(trainerCourseEntity);
             // trainerCourseRepository.delete(id);
         }
     }

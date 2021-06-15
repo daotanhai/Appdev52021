@@ -4,8 +4,8 @@ import com.laptrinhjavaweb.converter.TrainerConverter;
 import com.laptrinhjavaweb.dto.TrainerDTO;
 import com.laptrinhjavaweb.entity.TrainerEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
-import com.laptrinhjavaweb.repository.TrainerRepository;
-import com.laptrinhjavaweb.repository.UserRepository;
+import com.laptrinhjavaweb.repository.ITrainerRepository;
+import com.laptrinhjavaweb.repository.IUserRepository;
 import com.laptrinhjavaweb.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +20,10 @@ public class ProfileController {
     CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    UserRepository userRepository;
+    IUserRepository IUserRepository;
 
     @Autowired
-    TrainerRepository trainerRepository;
+    ITrainerRepository ITrainerRepository;
 
     @Autowired
     TrainerConverter trainerConverter;
@@ -34,8 +34,8 @@ public class ProfileController {
         UserEntity userEntity = new UserEntity();
         TrainerEntity trainerEntity = new TrainerEntity();
         long id = customUserDetailsService.getUserId();
-        userEntity = userRepository.findOne(id);
-        trainerEntity = trainerRepository.findTrainerEntityByUserName(userEntity.getUserName());
+        userEntity = IUserRepository.findOne(id);
+        trainerEntity = ITrainerRepository.findTrainerEntityByUserName(userEntity.getUserName());
         TrainerDTO trainerDTO = trainerConverter.toDTO(trainerEntity);
         mav.addObject("model", trainerDTO);
         return mav;

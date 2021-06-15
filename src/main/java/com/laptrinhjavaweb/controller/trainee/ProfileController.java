@@ -4,8 +4,8 @@ import com.laptrinhjavaweb.converter.TraineeConverter;
 import com.laptrinhjavaweb.dto.TraineeDTO;
 import com.laptrinhjavaweb.entity.TraineeEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
-import com.laptrinhjavaweb.repository.TraineeRepository;
-import com.laptrinhjavaweb.repository.UserRepository;
+import com.laptrinhjavaweb.repository.ITraineeRepository;
+import com.laptrinhjavaweb.repository.IUserRepository;
 import com.laptrinhjavaweb.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +20,10 @@ public class ProfileController {
     CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    UserRepository userRepository;
+    IUserRepository IUserRepository;
 
     @Autowired
-    TraineeRepository traineeRepository;
+    ITraineeRepository ITraineeRepository;
 
     @Autowired
     TraineeConverter traineeConverter;
@@ -34,8 +34,8 @@ public class ProfileController {
         UserEntity userEntity = new UserEntity();
         TraineeEntity traineeEntity = new TraineeEntity();
         long id = customUserDetailsService.getUserId();
-        userEntity = userRepository.findOne(id);
-        traineeEntity = traineeRepository.findTraineeEntityByUserName(userEntity.getUserName());
+        userEntity = IUserRepository.findOne(id);
+        traineeEntity = ITraineeRepository.findTraineeEntityByUserName(userEntity.getUserName());
         TraineeDTO traineeDTO = traineeConverter.toDTO(traineeEntity);
         mav.addObject("model", traineeDTO);
         return mav;

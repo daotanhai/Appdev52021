@@ -1,7 +1,5 @@
 package com.laptrinhjavaweb.config;
 
-import com.laptrinhjavaweb.initialDatabase.InitialDatabase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -50,7 +48,7 @@ public class JPAConfig {
 
     // SQL information
     // local
-    @Bean
+/*    @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -58,7 +56,7 @@ public class JPAConfig {
         dataSource.setUsername("root");
         dataSource.setPassword("root");
         return dataSource;
-    }
+    }*/
         // MY SQL OK nhung ko them dc vao db
 /*    @Bean
     public DataSource dataSource() {
@@ -80,7 +78,7 @@ public class JPAConfig {
         return dataSource;
     }*/
    // jdbc:postgresql://ec2-35-169-188-58.compute-1.amazonaws.com:5432/dbg6sua5v6iphl?password=2995810af148b172d7f2243f638580d9c53fc3691f458dd61bb74895f3fe5b76&sslmode=require&user=tnfopkhoxhchwv
-/*    @Bean
+    @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
@@ -88,7 +86,7 @@ public class JPAConfig {
         dataSource.setUsername("tnfopkhoxhchwv");
         dataSource.setPassword("2995810af148b172d7f2243f638580d9c53fc3691f458dd61bb74895f3fe5b76");
         return dataSource;
-    }*/
+    }
 	
     /*
      * EntityManager là một interface cung cấp các API cho việc tương tác với các Entity.
@@ -99,8 +97,8 @@ public class JPAConfig {
     @Bean
     Properties additionalProperties() {
         Properties properties = new Properties();
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
-//        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL82Dialect");
+//		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL82Dialect");
         // Tao table moi, xóa bảng cũ
 		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         // run nhung k tao - xoa table cu
