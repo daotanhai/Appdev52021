@@ -67,7 +67,7 @@ public class UserForAdminService implements IUserForAdminService {
 
     // Lưu user + cập nhật user
     @Override
-    public UserDTO save(UserDTO userDTO) {
+    public UserDTO saveUser(UserDTO userDTO) {
         // Lấy ra đối tượng RoleEntity cần phải update dựa trên role(string) gửi về
         // từ client trong DTO
         RoleEntity role = IRoleRepository.findOneByCode(userDTO.getRole());
@@ -97,7 +97,7 @@ public class UserForAdminService implements IUserForAdminService {
                         // Đầu tiên là lấy ra oldTrainer
                         TrainerEntity oldTrainerEntity = ITrainerRepository.findTrainerEntityByUserName(oldUser.getUserName());
                         oldTrainerEntity.setUserName(userDTO.getUserName()); // set userName moi
-                        ITrainerRepository.save(oldTrainerEntity); // save lai
+                        ITrainerRepository.save(oldTrainerEntity); // saveUser lai
                     }
                 }
                 // update cho training staff
@@ -120,38 +120,44 @@ public class UserForAdminService implements IUserForAdminService {
                 }
                 // Role là 1 field từ table khác. K có trong UserEntity nên phải thêm riêng
                 // update role của user cũ
+                // Làm với bảng USER, những logic ở trên là thao tác với trainer/training staff table
                 oldUser.setRoleEntity(role);
                 userEntity = userForAdminConverter.toEntity(oldUser, userDTO);
+                return userForAdminConverter.toDTO(IUserRepository.save(userEntity));
             }
             // id = null se them moi user
-            if (userDTO.getId() == null) {
+            if (userDTO.getId() == null && IUserRepository.findUserEntityByUserName(userDTO.getUserName())==null) {
                 userEntity = userForAdminConverter.toEntity(userDTO);
                 userEntity.setRoleEntity(role);
+                return userForAdminConverter.toDTO(IUserRepository.save(userEntity));
             }
-            return userForAdminConverter.toDTO(IUserRepository.save(userEntity));
+
         }
         // khi cập nhật hay thêm mới là làm với entity. Nhưng để đưa đối tượng ra view
         // va xử lý cần sang DTO
-        // dùng convert và gọi hàm SAVE ( framework), truyền vào entity muốn save, ở đây
+        // dùng convert và gọi hàm SAVE ( framework), truyền vào entity muốn saveUser, ở đây
         // là user entity va trainer entity
         return null;
     }
 
     @Override
     public void saveTrainerRoleAndUserName(UserDTO userDTO) {
-        TrainerEntity trainerEntity = new TrainerEntity();
-        RoleEntity role = IRoleRepository.findOneByCode(userDTO.getRole());
-        if (userDTO.getId() == null) {
-            trainerEntity.setUserName(userDTO.getUserName());
-            trainerEntity.setRoleTrainer(role);
-            trainerEntity.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        if (IUserRepository.findUserEntityByUserName(userDTO.getUserName())==null){
+            TrainerEntity trainerEntity = new TrainerEntity();
+            RoleEntity role = IRoleRepository.findOneByCode(userDTO.getRole());
+            if (userDTO.getId() == null) {
+                trainerEntity.setUserName(userDTO.getUserName());
+                trainerEntity.setRoleTrainer(role);
+                trainerEntity.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+            }
+            // khi cập nhật hay thêm mới là làm với entity. Nhưng để đưa đối tượng ra view
+            // va xử lý cần sang DTO
+            // dùng convert và gọi hàm SAVE ( framework), truyền vào entity muốn saveUser, ở đây
+            // trainer entity
+            // cần return vì sau này sẽ để hiển thị lại các fields đã lưu
+            trainerConverter.toDTO(ITrainerRepository.save(trainerEntity));
         }
-        // khi cập nhật hay thêm mới là làm với entity. Nhưng để đưa đối tượng ra view
-        // va xử lý cần sang DTO
-        // dùng convert và gọi hàm SAVE ( framework), truyền vào entity muốn save, ở đây
-        // trainer entity
-        // cần return vì sau này sẽ để hiển thị lại các fields đã lưu
-        trainerConverter.toDTO(ITrainerRepository.save(trainerEntity));
+
     }
 
     @Override
@@ -165,27 +171,27 @@ public class UserForAdminService implements IUserForAdminService {
         return (int) IUserRepository.count();
     }
 
-
-
     @Override
     public void saveTrainingStaffRoleAndUserNameAndPassword(UserDTO userDTO) {
-        TrainingStaffEntity trainingStaffEntity = new TrainingStaffEntity();
-        // Tìm ra đối tượng role(bao gồm các fields trong table mySQL)
-        // dựa theo code(ADMIN, TRAINING-STAFF, TRAINER) gửi về từ DTO
-        // trùng cái nào thì get ra đối tượng đó, chứa các thông tin như trong field
-        RoleEntity role = IRoleRepository.findOneByCode(userDTO.getRole());
-        // id trong userDTO = rỗng nghĩa là đang thêm mới. Otherwise, update
-        if (userDTO.getId() == null) {
-            trainingStaffEntity.setUserName(userDTO.getUserName());
-            // Set 1 đối tượng mới vào table trainingstaff
-            // đối tượng này mình chỉ thêm chủ động role vào table trainingstaff
-            trainingStaffEntity.setRoleTrainingStaff(role);
+        if (IUserRepository.findUserEntityByUserName(userDTO.getUserName())==null){
+            TrainingStaffEntity trainingStaffEntity = new TrainingStaffEntity();
+            // Tìm ra đối tượng role(bao gồm các fields trong table mySQL)
+            // dựa theo code(ADMIN, TRAINING-STAFF, TRAINER) gửi về từ DTO
+            // trùng cái nào thì get ra đối tượng đó, chứa các thông tin như trong field
+            RoleEntity role = IRoleRepository.findOneByCode(userDTO.getRole());
+            // id trong userDTO = rỗng nghĩa là đang thêm mới. Otherwise, update
+            if (userDTO.getId() == null) {
+                trainingStaffEntity.setUserName(userDTO.getUserName());
+                // Set 1 đối tượng mới vào table trainingstaff
+                // đối tượng này mình chỉ thêm chủ động role vào table trainingstaff
+                trainingStaffEntity.setRoleTrainingStaff(role);
+            }
+            // khi cập nhật hay thêm mới là làm với entity. Nhưng để đưa đối tượng ra view
+            // va xử lý cần sang DTO
+            // dùng convert và gọi hàm SAVE ( framework), truyền vào entity muốn saveUser, ở đây
+            // trainer entity
+            trainingStaffConverter.toDTO(ITrainingStaffRepository.save(trainingStaffEntity));
         }
-        // khi cập nhật hay thêm mới là làm với entity. Nhưng để đưa đối tượng ra view
-        // va xử lý cần sang DTO
-        // dùng convert và gọi hàm SAVE ( framework), truyền vào entity muốn save, ở đây
-        // trainer entity
-        trainingStaffConverter.toDTO(ITrainingStaffRepository.save(trainingStaffEntity));
     }
 
     // Xoa user
@@ -221,7 +227,7 @@ public class UserForAdminService implements IUserForAdminService {
         String encodedOTP = bCryptPasswordEncoder.encode(OTP);
         userEntity.setOneTimePassword(encodedOTP);
         userEntity.setOtpRequestedTime(new Date());
-        userRepository.save(userEntity);
+        userRepository.saveUser(userEntity);
         sendOTPEmail(userEntity,OTP);
     }
 
@@ -247,6 +253,6 @@ public class UserForAdminService implements IUserForAdminService {
     public void clearOTP(UserEntity userEntity) {
         userEntity.setOneTimePassword(null);
         userEntity.setOtpRequestedTime(null);
-        userRepository.save(userEntity);
+        userRepository.saveUser(userEntity);
     }*/
 }

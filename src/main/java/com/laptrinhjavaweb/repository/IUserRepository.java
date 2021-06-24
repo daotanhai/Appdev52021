@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IUserRepository extends JpaRepository<UserEntity, Long> {
     UserEntity findOneByUserNameAndStatus(String userName, int status);
-
     UserEntity findUserEntityByUserName(String userName);
     // Tra ve 1 cai gi do -> FindOne
     // by username va status

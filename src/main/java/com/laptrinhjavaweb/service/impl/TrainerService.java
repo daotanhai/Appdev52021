@@ -75,6 +75,7 @@ public class TrainerService implements ITrainerService {
             // update trong bang user
             oldUser.setPassword(bCryptPasswordEncoder.encode(trainerDTO.getPassWord()));
             oldUser.setFullName(trainerDTO.getName());
+            oldUser.setUserName(trainerDTO.getUserName());
             IUserRepository.save(oldUser);
             // update trong bang trainer
             oldTrainer.setRoleTrainer(role);
@@ -139,18 +140,22 @@ public class TrainerService implements ITrainerService {
             ITrainerRepository.delete(id);
         }
     }
-
+    // gan khoa hoc vao trainer
     @Override
+    @Transactional
     public void saveCourseAssign(long[] ids) {
         long trainerId = ids[0];
         for (int i = 1; i < ids.length; i++) {
-            TrainerCourseEntity trainerCourseEntity = new TrainerCourseEntity();
-            TrainerEntity trainerEntity = ITrainerRepository.findOne(trainerId);
             long courseIdOld = ids[i];
-            CourseEntity courseEntity = ICourseRepository.findOne(courseIdOld);
-            trainerCourseEntity.setTrainerEntity(trainerEntity);
-            trainerCourseEntity.setCourseEntityForTrainer(courseEntity);
-            ITrainerCourseRepository.save(trainerCourseEntity);
+            // tìm thử trong database đã tồn tại cặp trainer id và course id chưa?
+            if (ITrainerCourseRepository.findTrainerCourseEntitiesByTrainerEntity_IdAndCourseEntityForTrainer_Id(trainerId,courseIdOld).size()==0){
+                TrainerCourseEntity trainerCourseEntity = new TrainerCourseEntity();
+                TrainerEntity trainerEntity = ITrainerRepository.findOne(trainerId);
+                CourseEntity courseEntity = ICourseRepository.findOne(courseIdOld);
+                trainerCourseEntity.setTrainerEntity(trainerEntity);
+                trainerCourseEntity.setCourseEntityForTrainer(courseEntity);
+                ITrainerCourseRepository.save(trainerCourseEntity);
+            }
         }
     }
 

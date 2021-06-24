@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ITraineeService {
-    // save trainee entity
+    // saveUser trainee entity
     void saveTraineeEntity(TraineeEntity traineeEntity);
 
     // Find ALL trainee

@@ -11,7 +11,7 @@ import java.util.List;
 public interface IUserForAdminService {
     List<UserDTO> findAll(Pageable pageable);
 
-    UserDTO save(UserDTO userDTO);
+    UserDTO saveUser(UserDTO userDTO);
 
     void saveTrainerRoleAndUserName(UserDTO userDTO);
 

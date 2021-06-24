@@ -62,7 +62,7 @@ public class CourseCategoryService implements ICourseCategoryService {
             courseCategoryEntity = courseCategoryConverter.toEntity(oldCourseCategoryEntity, courseCategoryDTO);
         }
         // thêm mới
-        if (courseCategoryDTO.getId() == null) {
+        if (courseCategoryDTO.getId() == null && ICourseCategoryRepository.findByCourseCategoryNameCode(courseCategoryDTO.getCourseCategoryNameCode())==null) {
             courseCategoryEntity = courseCategoryConverter.toEntity(courseCategoryDTO);
         }
         return courseCategoryConverter.toDTO(ICourseCategoryRepository.save(courseCategoryEntity));

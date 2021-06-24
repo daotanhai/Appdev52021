@@ -53,7 +53,7 @@ public class TraineeService implements ITraineeService {
 
     @Override
     public List<TraineeDTO> findAll(Pageable pageable) {
-        List<TraineeDTO> models = new ArrayList<TraineeDTO>();
+        List<TraineeDTO> models = new ArrayList<>();
         List<TraineeEntity> entities = ITraineeRepository.findAll(pageable).getContent();
         for (TraineeEntity items : entities) {
             TraineeDTO traineeDTO = traineeConverter.toDTO(items);
@@ -75,6 +75,7 @@ public class TraineeService implements ITraineeService {
             // update trong bang User
             oldUser.setPassword(bCryptPasswordEncoder.encode(traineeDTO.getPassword()));
             oldUser.setFullName(traineeDTO.getName());
+            oldUser.setUserName(traineeDTO.getUserName());
             IUserRepository.save(oldUser);
             // update trong bang trainee
             oldTrainee.setRoleTrainee(role);
@@ -82,8 +83,8 @@ public class TraineeService implements ITraineeService {
 
             traineeEntity = traineeConverter.toEntity(oldTrainee, traineeDTO);
         }
-        // them moi trainee
-        if (traineeDTO.getId() == null) {
+        // them moi trainee - nếu username bị trùng thì ko thêm vào
+        if (traineeDTO.getId() == null && ITraineeRepository.findTraineeEntityByUserName(traineeEntity.getUserName())==null) {
             traineeEntity = traineeConverter.toEntity(traineeDTO);
             // set username + password cho table user -> co the dang nhap duoc
             userEntity.setUserName(traineeEntity.getUserName());
@@ -150,19 +151,23 @@ public class TraineeService implements ITraineeService {
         long traineeId = ids[0];
         // i bắt đầu = 1 vì phải bỏ qua giá trị của traineeId trong mảng
         for (int i = 1; i < ids.length; i++) {
-            TraineeCourseEntity traineeCourseEntity = new TraineeCourseEntity();
-            TraineeEntity traineeEntity = ITraineeRepository.findOne(traineeId);
             long courseIdOld = ids[i];
-            // Tìm courseEntity dựa trên courseIdOle
-            CourseEntity courseEntity = ICourseRepository.findOne(courseIdOld);
-            // set trainee
-            traineeCourseEntity.setTraineeEntity(traineeEntity);
-            // set course
-            traineeCourseEntity.setCourseEntityForTrainee(courseEntity);
-            // set xong thì lưu
-            ITraineeCourseRepository.save(traineeCourseEntity);
+            if (ITraineeCourseRepository.findTraineeCourseEntitiesByTraineeEntity_IdAndCourseEntityForTrainee_Id(traineeId,courseIdOld).size()==0){
+                TraineeCourseEntity traineeCourseEntity = new TraineeCourseEntity();
+                TraineeEntity traineeEntity = ITraineeRepository.findOne(traineeId);
+
+                // Tìm courseEntity dựa trên courseIdOle
+                CourseEntity courseEntity = ICourseRepository.findOne(courseIdOld);
+                // set trainee
+                traineeCourseEntity.setTraineeEntity(traineeEntity);
+                // set course
+                traineeCourseEntity.setCourseEntityForTrainee(courseEntity);
+                // set xong thì lưu
+                ITraineeCourseRepository.save(traineeCourseEntity);
+            }
+
         }
-        //traineeRepository.save(traineeEntity);
+        //traineeRepository.saveUser(traineeEntity);
     }
 
     @Override

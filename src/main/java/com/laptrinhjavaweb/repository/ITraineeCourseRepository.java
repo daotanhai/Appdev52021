@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ITraineeCourseRepository extends JpaRepository<TraineeCourseEntity, Long> {
     List<TraineeCourseEntity> findTraineeCourseEntitiesByTraineeEntity_Id(long id);
+    List<TraineeCourseEntity> findTraineeCourseEntitiesByTraineeEntity_IdAndCourseEntityForTrainee_Id(long traineeId, long courseId);
 }

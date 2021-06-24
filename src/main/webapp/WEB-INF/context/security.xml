@@ -15,19 +15,40 @@
         <!-- Phân quyền cho ADMIN -->
         <intercept-url pattern="/quan-tri/trang-chu" access="hasAnyRole('ADMIN')"/>
         <intercept-url pattern="/quan-tri/user/edit" access="hasAnyRole('ADMIN')"/>
-        <intercept-url pattern="/quan-tri/bai-viet/danh-sach" access="hasAnyRole('ADMIN')"/>
         <intercept-url pattern="/quan-tri/user/list" access="hasAnyRole('ADMIN')"/>
-        <intercept-url pattern="/quan-tri/bai-viet/chinh-sua" access="hasAnyRole('ADMIN')"/>
         <!-- kết thúc phân quyền cho ADMIN -->
 
         <!-- Phân quyền cho TRAINING-STAFF -->
         <intercept-url pattern="/training-staff/trang-chu" access="hasAnyRole('TRAINING-STAFF')"/>
         <intercept-url pattern="/training-staff/trainee/edit" access="hasAnyRole('TRAINING-STAFF')"/>
         <intercept-url pattern="/training-staff/trainee/list" access="hasAnyRole('TRAINING-STAFF')"/>
-        <intercept-url pattern="/training-staff/coursecategory/edit" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/trainee/assign-course" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/trainer/edit" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/trainer/list" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/trainer/assign-course" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/course/list" access="hasAnyRole('TRAINING-STAFF')"/>
         <intercept-url pattern="/training-staff/coursecategory/list" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/trainee/edit" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/coursecategory/edit" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/course/edit" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/trainee/search" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/course-category/search" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/course/search" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/count" access="hasAnyRole('TRAINING-STAFF')"/>
+        <intercept-url pattern="/training-staff/request/course" access="hasAnyRole('TRAINING-STAFF')"/>
         <!-- kết thúc phân quyền cho TRAINING-STAFF -->
+        <!--Phân quyền cho trainee-->
+        <intercept-url pattern="/trainee/trang-chu" access="hasAnyRole('TRAINEE')"/>
+        <intercept-url pattern="/trainee/profile/view" access="hasAnyRole('TRAINEE')"/>
+        <intercept-url pattern="/trainee/course/list" access="hasAnyRole('TRAINEE')"/>
+        <intercept-url pattern="/trainee/course/my-course" access="hasAnyRole('TRAINEE')"/>
+        <!--Kết thúc phân quyền cho trainee-->
 
+        <!--Phân quyền cho trainer-->
+        <intercept-url pattern="/trainer/trang-chu" access="hasAnyRole('TRAINER')"/>
+        <intercept-url pattern="/trainer/profile/view" access="hasAnyRole('TRAINER')"/>
+        <intercept-url pattern="/trainer/course/my-course" access="hasAnyRole('TRAINER')"/>
+        <!--Kết thúc phân quyền cho trainer-->
         <access-denied-handler error-page="/accessDenied"/>
         <form-login login-page="/dang-nhap"
                     username-parameter="j_username"
